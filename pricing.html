@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Graphiqz</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js"></script>
+</head>
+<body>
+
+    <header class="glass">
+        <div class="logo">Graphiqz</div>
+        <button class="mobile-menu-btn" id="menuBtn">☰</button>
+        <nav>
+            <ul id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tool.html">Try Graphiqz</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+        <button id="themeToggle" class="glass">🌓</button>
+    </header>
+
+    <main style="margin-top: 150px; padding: 0 5%;">
+        <section class="fade-in" style="text-align: center; margin-bottom: 3rem;">
+            <h1 style="font-size: 3rem; font-family: 'Bricolage Grotesque';">Simple, Transparent Pricing.</h1>
+            <p>Built for creators. Scaled for professionals.</p>
+        </section>
+
+        <section style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;" class="fade-in">
+            <div class="glass" style="padding: 3rem; width: 350px; text-align: center;">
+                <h2>Guest / Free</h2>
+                <h3 style="font-size: 2.5rem; margin: 1rem 0;">$0<span style="font-size: 1rem;">/mo</span></h3>
+                <ul style="list-style: none; padding: 0; margin-bottom: 2rem; line-height: 2.5;">
+                    <li>✓ 5-Second Animations</li>
+                    <li>✓ 30 FPS Rendering</li>
+                    <li>✓ 3 Renders per Day</li>
+                    <li>✓ Graphiqz Watermark</li>
+                </ul>
+                <button onclick="window.location.href='tool.html'" style="background: transparent; border: 2px solid var(--text-primary); color: var(--text-primary);">Start Free</button>
+            </div>
+
+            <div class="glass" style="padding: 3rem; width: 350px; text-align: center; border: 2px solid #7AAACE; transform: scale(1.05);">
+                <h2>Pro Studio</h2>
+                <h3 style="font-size: 2.5rem; margin: 1rem 0;">$19<span style="font-size: 1rem;">/mo</span></h3>
+                <ul style="list-style: none; padding: 0; margin-bottom: 2rem; line-height: 2.5;">
+                    <li>✓ Up to 15-Second Animations</li>
+                    <li>✓ 60 FPS Premium Rendering</li>
+                    <li>✓ Unlimited Daily Renders</li>
+                    <li>✓ <b>No Watermark</b></li>
+                </ul>
+                <button onclick="window.location.href='tool.html'">Subscribe Pro</button>
+            </div>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 2rem; margin-top: 4rem; border-top: 1px solid var(--glass-border);">
+        <p>&copy; 2026 Graphiqz. All Rights Reserved.</p>
+    </footer>
+
+    
+</body>
+</html>

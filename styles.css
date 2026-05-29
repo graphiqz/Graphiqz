@@ -1,0 +1,129 @@
+/* Google Fonts & Fontshare (for Ranade) */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Lato:wght@400;700&family=Source+Sans+3:wght@400;600&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=ranade@400,700&display=swap');
+
+:root {
+  /* Light Theme Gradients */
+  --bg-gradient: linear-gradient(135deg, #F7F8F0 0%, #9CD5FF 50%, #7AAACE 100%);
+  --text-primary: #355872;
+  --glass-bg: rgba(247, 248, 240, 0.4);
+  --glass-border: rgba(156, 213, 255, 0.4);
+  
+  font-family: 'Ranade', 'Source Sans 3', sans-serif;
+  transition: all 0.5s ease-in-out;
+}
+
+[data-theme="dark"] {
+  /* Dark Theme Gradients */
+  --bg-gradient: linear-gradient(135deg, #0F2854 0%, #1C4D8D 50%, #4988C4 100%);
+  --text-primary: #F7F8F0;
+  --glass-bg: rgba(15, 40, 84, 0.4);
+  --glass-border: rgba(73, 136, 196, 0.4);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Header & Animated Logo */
+header {
+  position: fixed;
+  top: 0; width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 5%;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(270deg, #9CD5FF, #355872, #7AAACE);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: GradientMove 5s ease infinite;
+}
+
+/* Navigation */
+nav ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+nav a {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  transition: transform 0.3s;
+}
+nav a:hover { transform: translateY(-3px); }
+
+/* Mobile Menu Button */
+.mobile-menu-btn { display: none; cursor: pointer; border:none; background:transparent; font-size: 2rem; color: var(--text-primary); }
+
+/* Animations */
+@keyframes GradientMove {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* Responsive Mobile Nav */
+@media (max-width: 768px) {
+  nav ul {
+    position: absolute;
+    top: 80px; left: 0; right: 0;
+    flex-direction: column;
+    align-items: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    padding: 2rem 0;
+    display: none;
+  }
+  nav ul.show { display: flex; }
+  .mobile-menu-btn { display: block; }
+}
+
+/* Tool UI (Graphiqz App) */
+.tool-container {
+  display: flex;
+  margin-top: 120px;
+  padding: 0 5%;
+  gap: 2rem;
+  height: 75vh;
+}
+.tool-controls { flex: 1; padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+.tool-preview { flex: 2; display: flex; justify-content: center; align-items: center; }
+.preview-box { width: 100%; height: 100%; border-radius: 16px; background: #000; }
+textarea, select, button {
+  width: 100%; padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  font-family: 'Lato', sans-serif;
+}
+button { cursor: pointer; font-weight: bold; background: linear-gradient(135deg, #7AAACE, #355872); color: #fff; border: none; }
