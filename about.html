@@ -1,42 +1,255 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Graphiqz</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="app.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Graphiqz | The Team Behind the Motion</title>
+  <meta name="description" content="Learn about the Graphiqz team, our mission to democratize motion graphics with AI, and the values that drive everything we build." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://graphiqz.ai/pages/about.html" />
+  <meta property="og:title" content="About Graphiqz — Our Story and Mission" />
+  <meta property="og:description" content="We believe great motion graphics should be accessible to everyone, not just those who can code or afford expensive software." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%239CD5FF'/><stop offset='100%25' stop-color='%234988C4'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='16' y='22' text-anchor='middle' font-size='18' fill='white' font-weight='bold'>G</text></svg>" />
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
 </head>
 <body>
 
-    <header class="glass">
-        <div class="logo">Graphiqz</div>
-        <button class="mobile-menu-btn" id="menuBtn">☰</button>
-        <nav>
-            <ul id="navMenu">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="tool.html">Try Graphiqz</a></li>
-                <li><a href="pricing.html">Pricing</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-        </nav>
-        <button id="themeToggle" class="glass">🌓</button>
-    </header>
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="bg-mesh-extra"></div>
+  </div>
 
-    <main style="margin-top: 150px; padding: 0 10%;">
-        <section class="glass fade-in" style="padding: 4rem; text-align: center;">
-            <h1 style="font-size: 3rem; font-family: 'Bricolage Grotesque';">The Evolution of Motion.</h1>
-            <p style="font-size: 1.2rem; line-height: 1.8; margin-top: 2rem; text-align: justify;">
-                Graphiqz was born out of a simple frustration: creating high-quality, professional motion graphics and UI animations shouldn't take hours of keyframing in complex software. We built this engine to bridge the gap between imagination and execution. By combining the cutting-edge reasoning of Gemini AI with client-side code rendering, we've created a platform that empowers content creators, agencies, and developers to generate premium visual assets at the speed of thought. 
-            </p>
-        </section>
+  <!-- NAVBAR -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="../index.html" class="logo">Graphiqz</a>
+    <ul class="nav-links" role="list">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="tool.html">Try Graphiqz</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="about.html" class="active" aria-current="page">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Toggle theme">
+        <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-14a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 17a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zM4.22 5.64a1 1 0 0 1 1.42-1.42l.7.71a1 1 0 0 1-1.41 1.41l-.71-.7zM17.66 19.07a1 1 0 1 1 1.41-1.41l.71.7a1 1 0 0 1-1.42 1.42l-.7-.71zM3 12a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1zm17 0a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2h-1a1 1 0 0 1-1-1zM5.64 19.07l-.7.71a1 1 0 0 1-1.42-1.42l.71-.7a1 1 0 0 1 1.41 1.41zM19.07 5.64a1 1 0 1 1 1.41 1.41l-.7.71a1 1 0 0 1-1.42-1.42l.71-.7z"/></svg>
+        <svg class="theme-icon-moon" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="tool.html" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Try Graphiqz
+      </a>
+    </div>
+    <button class="menu-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="mobile-nav" role="navigation">
+    <a href="../index.html">Home</a>
+    <a href="tool.html">Try Graphiqz</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+  </div>
+
+  <div class="page-wrapper">
+    <main class="page-main">
+
+      <!-- Page Hero -->
+      <section class="page-hero" aria-labelledby="about-hero-heading">
+        <div class="page-hero-bg" aria-hidden="true"></div>
+        <div class="page-hero-grid" aria-hidden="true"></div>
+        <div class="page-hero-content fade-up">
+          <span class="section-label">Our Story</span>
+          <h1 id="about-hero-heading" class="section-title">
+            We Believe Motion<br /><span class="gradient-text">Belongs to Everyone</span>
+          </h1>
+          <div class="grad-divider" style="margin:16px auto;"></div>
+          <p>Graphiqz was built by creators, for creators — with one simple conviction: stunning motion graphics should not require a $3,000 software suite or a computer science degree.</p>
+        </div>
+      </section>
+
+      <!-- STORY SECTION -->
+      <section class="about-story" aria-labelledby="story-heading">
+        <div class="about-story-layout">
+          <div class="about-visual fade-left">
+            <div class="glass-card about-big-card">
+              <div class="about-big-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              </div>
+              <h3 style="font-size:1.5rem;margin-bottom:12px;">Born from Frustration</h3>
+              <p style="color:var(--text-secondary);line-height:1.75;margin-bottom:20px;">Our founders spent years watching brilliant ideas never come to life because motion design was too slow, too expensive, or too technical.</p>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;text-align:center;">
+                <div style="padding:16px;background:var(--bg-glass);border-radius:10px;border:1px solid var(--border-glass);">
+                  <div class="counter-wrap" data-count="2022" data-duration="1500" style="font-size:1.8rem;">2022</div>
+                  <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Founded</div>
+                </div>
+                <div style="padding:16px;background:var(--bg-glass);border-radius:10px;border:1px solid var(--border-glass);">
+                  <div class="counter-wrap" data-count="14" data-duration="1200" style="font-size:1.8rem;">14</div>
+                  <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Team Members</div>
+                </div>
+                <div style="padding:16px;background:var(--bg-glass);border-radius:10px;border:1px solid var(--border-glass);">
+                  <div class="counter-wrap" data-count="12" data-suffix="K+" data-duration="1800" style="font-size:1.8rem;">0</div>
+                  <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Creators</div>
+                </div>
+                <div style="padding:16px;background:var(--bg-glass);border-radius:10px;border:1px solid var(--border-glass);">
+                  <div class="counter-wrap" data-count="6" data-duration="1000" style="font-size:1.8rem;">6</div>
+                  <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Countries</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-story-text fade-right">
+            <span class="section-label">How We Got Here</span>
+            <h2 id="story-heading">A Platform Built from a Genuine Creative Pain</h2>
+            <div class="grad-divider"></div>
+            <p>Graphiqz started in 2022 when our co-founders — a motion designer and a machine learning engineer — sat down over a problem: why does creating a 10-second animation take 4 hours in professional tools?</p>
+            <p>They believed that large language models, combined with structured canvas rendering pipelines, could dramatically compress that timeline. The first prototype generated a particle animation from a prompt in 45 seconds. That moment changed everything.</p>
+            <p>Today, Graphiqz serves over 12,000 creators globally — from YouTubers and educators to startup founders and enterprise marketing teams — all using AI-generated motion graphics to bring their ideas to life instantly.</p>
+            <p>We're a small, remote-first team distributed across Karachi, London, Singapore, and San Francisco. We ship fast, listen to our users, and obsess over output quality.</p>
+            <div style="display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;">
+              <a href="tool.html" class="btn btn-primary">Try the Tool</a>
+              <a href="contact.html" class="btn btn-secondary">Get in Touch</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VALUES -->
+      <section class="about-values" aria-labelledby="values-heading">
+        <div style="text-align:center;margin-bottom:0;">
+          <span class="section-label">What Drives Us</span>
+          <h2 class="section-title fade-up" id="values-heading">Our Core <span class="gradient-text">Values</span></h2>
+          <div class="grad-divider" style="margin:16px auto 60px;"></div>
+        </div>
+        <div class="values-grid">
+          <div class="glass-card value-card fade-up delay-1">
+            <div class="icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            </div>
+            <h3>Speed is a Feature</h3>
+            <p>Every second you wait is a second your idea isn't alive. We obsessively optimize generation time because creative momentum is sacred.</p>
+          </div>
+          <div class="glass-card value-card fade-up delay-2">
+            <div class="icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+            </div>
+            <h3>Quality Without Compromise</h3>
+            <p>AI-generated doesn't mean low quality. We've engineered our pipeline so every output is production-grade — smooth, polished, and ready to use.</p>
+          </div>
+          <div class="glass-card value-card fade-up delay-3">
+            <div class="icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            </div>
+            <h3>Accessibility for All</h3>
+            <p>A student in Karachi deserves the same creative tools as a studio in Los Angeles. Our free tier is generous by design — not an afterthought.</p>
+          </div>
+          <div class="glass-card value-card fade-up delay-1">
+            <div class="icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+            </div>
+            <h3>Transparent Engineering</h3>
+            <p>We use AI as a tool, not a black box. Our pipeline is explainable — the code we generate is readable, modifiable, and entirely yours.</p>
+          </div>
+          <div class="glass-card value-card fade-up delay-2">
+            <div class="icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            </div>
+            <h3>Privacy by Default</h3>
+            <p>Your creative prompts and animations render locally in your browser. We don't collect, store, or monetize your ideas. Period.</p>
+          </div>
+          <div class="glass-card value-card fade-up delay-3">
+            <div class="icon-box">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            </div>
+            <h3>Ship Fast, Learn Faster</h3>
+            <p>We release updates weekly based directly on user feedback. When creators tell us something doesn't work, we fix it — quickly and publicly.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TEAM -->
+      <section class="about-team" aria-labelledby="team-heading">
+        <div style="text-align:center;margin-bottom:0;">
+          <span class="section-label">The People</span>
+          <h2 class="section-title fade-up" id="team-heading">Meet the <span class="gradient-text">Team</span></h2>
+          <div class="grad-divider" style="margin:16px auto 50px;"></div>
+        </div>
+        <div class="team-grid">
+          <div class="glass-card team-card fade-up delay-1">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">ZA</div>
+            </div>
+            <div class="team-name">Zaid Ansari</div>
+            <div class="team-role">Co-founder & CEO</div>
+            <p class="team-bio">Former motion designer with 8 years at top production studios. Built the original Graphiqz prototype in a Karachi apartment over three sleepless weekends.</p>
+          </div>
+          <div class="glass-card team-card fade-up delay-2">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">SR</div>
+            </div>
+            <div class="team-name">Sophia Reyes</div>
+            <div class="team-role">Co-founder & CTO</div>
+            <p class="team-bio">ML engineer specializing in code-generating LLMs. Previously at Google DeepMind. Designed the entire Graphiqz AI pipeline from first principles.</p>
+          </div>
+          <div class="glass-card team-card fade-up delay-3">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">LK</div>
+            </div>
+            <div class="team-name">Lena Krause</div>
+            <div class="team-role">Head of Design</div>
+            <p class="team-bio">Product designer focused on making complex AI tools feel effortless. Obsesses over typography, micro-interactions, and making things beautiful at every pixel.</p>
+          </div>
+          <div class="glass-card team-card fade-up delay-1">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">RN</div>
+            </div>
+            <div class="team-name">Rayan Nouri</div>
+            <div class="team-role">Lead Engineer</div>
+            <p class="team-bio">Full-stack architect who built Graphiqz's real-time rendering engine and browser-local animation pipeline. Contributor to the WebGL and Canvas API working groups.</p>
+          </div>
+          <div class="glass-card team-card fade-up delay-2">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">AM</div>
+            </div>
+            <div class="team-name">Amara Mensah</div>
+            <div class="team-role">Head of Growth</div>
+            <p class="team-bio">Growth strategist who scaled Graphiqz from 200 beta users to 12,000+ in under eight months. Passionate about building products that spread because they genuinely help people.</p>
+          </div>
+          <div class="glass-card team-card fade-up delay-3">
+            <div class="team-avatar-wrap">
+              <div class="team-avatar">JP</div>
+            </div>
+            <div class="team-name">James Park</div>
+            <div class="team-role">AI Research Lead</div>
+            <p class="team-bio">PhD in generative systems from MIT. Leads the research into next-generation prompt understanding and multi-style animation synthesis at Graphiqz.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section style="padding:60px 5% 100px;position:relative;z-index:1;">
+        <div style="max-width:700px;margin:0 auto;" class="glass cta-card text-center fade-up" style="padding:60px 40px;">
+          <span class="section-label">Join Us</span>
+          <h2 class="section-title">Ready to Create<br /><span class="gradient-text">Something Extraordinary?</span></h2>
+          <p style="color:var(--text-secondary);margin-bottom:32px;">Start generating stunning motion graphics in seconds. No design skills. No software. Just your imagination.</p>
+          <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+            <a href="tool.html" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              Try Graphiqz Free
+            </a>
+            <a href="contact.html" class="btn btn-secondary">Contact the Team</a>
+          </div>
+        </div>
+      </section>
+
     </main>
 
-    <footer style="text-align: center; padding: 2rem; margin-top: 4rem; border-top: 1px solid var(--glass-border);">
-        <p>&copy; 2026 Graphiqz. All Rights Reserved.</p>
+    <footer class="footer" role="contentinfo">
+      <p>&copy; <span id="copy-year"></span> <span class="grad-copy">Graphiqz</span>. All rights reserved.</p>
     </footer>
+  </div>
 
-    
+  <script src="../js/main.js"></script>
+  <script>document.getElementById('copy-year').textContent = new Date().getFullYear();</script>
 </body>
 </html>
