@@ -100,15 +100,6 @@
 
       <!-- BILLING TOGGLE -->
       <div class="pricing-section">
-        <div class="pricing-toggle-wrap" role="group" aria-label="Billing period">
-          <span class="pricing-toggle-label">Monthly</span>
-          <label class="pricing-toggle" aria-label="Switch to yearly billing">
-            <input type="checkbox" id="billing-toggle" />
-            <span class="pricing-slider"></span>
-          </label>
-          <span class="pricing-toggle-label">Yearly</span>
-          <span class="pricing-save-badge">Save 30%</span>
-        </div>
 
         <!-- PRICING CARDS -->
         <div class="pricing-grid" role="list">
@@ -124,6 +115,10 @@
             <p class="pricing-desc">Perfect for exploring Graphiqz and creating personal projects. No commitment required.</p>
             <div class="pricing-divider"></div>
             <ul class="pricing-features" aria-label="Free plan features">
+              <li class="pricing-feature">
+                <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
+                3 generations/day
+              </li>
               <li class="pricing-feature">
                 <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
                 30fps animation rendering
@@ -166,12 +161,16 @@
             <p class="pricing-plan-name" itemprop="name">Pro</p>
             <div class="pricing-price">
               <span class="price-currency">$</span>
-              <span class="price-amount" id="pro-price" data-monthly="12" data-yearly="8" itemprop="price">12</span>
+              <span class="price-amount" id="pro-price" data-monthly="12" data-yearly="8" itemprop="price">6</span>
             </div>
             <p class="price-period" id="pro-period">per month, billed monthly</p>
             <p class="pricing-desc" itemprop="description">For serious creators who need professional-grade output, longer animations, and full format support.</p>
             <div class="pricing-divider"></div>
             <ul class="pricing-features" aria-label="Pro plan features">
+              <li class="pricing-feature">
+                <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
+                15 generations/day
+              </li>
               <li class="pricing-feature">
                 <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
                 <strong>60fps</strong> silky smooth rendering
@@ -216,13 +215,18 @@
             <p class="pricing-plan-name" itemprop="name">Studio</p>
             <div class="pricing-price">
               <span class="price-currency">$</span>
-              <span class="price-amount" id="studio-price" data-monthly="39" data-yearly="27" itemprop="price">39</span>
+              <span class="price-amount" id="studio-price" data-monthly="39" data-yearly="27" itemprop="price">10</span>
             </div>
             <p class="price-period" id="studio-period">per month, billed monthly</p>
             <p class="pricing-desc" itemprop="description">For agencies and power users who demand maximum output, API access, and team collaboration.</p>
             <div class="pricing-divider"></div>
             <ul class="pricing-features" aria-label="Studio plan features">
               <li class="pricing-feature">
+                <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
+                30 generations/day
+              </li>
+              <li class="pricing-feature">
+              
                 <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
                 Everything in Pro
               </li>
@@ -284,6 +288,7 @@
               </tr>
             </thead>
             <tbody>
+              <tr><td>Credits</td><td>3</td><td>15</td><td>30</td></tr>
               <tr><td>Frame Rate</td><td>30fps</td><td>60fps</td><td>60fps</td></tr>
               <tr><td>Max Duration</td><td>5 seconds</td><td>15 seconds</td><td>15 seconds</td></tr>
               <tr><td>Aspect Ratios</td><td>16:9 only</td><td>All 5</td><td>All 5</td></tr>
@@ -316,7 +321,7 @@
             <h2 class="section-title fade-up" id="pfaq-heading">Pricing <span class="gradient-text">FAQs</span></h2>
             <div class="grad-divider"></div>
           </div>
-          <div class="faq-list">
+          <div class="faq-list glass" style="padding: 24px; border-radius: var(--radius-xl);" itemscope itemtype="https://schema.org/FAQPage">
             <div class="faq-item">
               <button class="faq-question" aria-expanded="false">
                 Can I cancel my plan at any time?
@@ -368,22 +373,7 @@
   <script>
     document.getElementById('copy-year').textContent = new Date().getFullYear();
 
-    // Billing toggle price switch
-    const toggle = document.getElementById('billing-toggle');
-    const proPrice = document.getElementById('pro-price');
-    const studioPrice = document.getElementById('studio-price');
-    const proPeriod = document.getElementById('pro-period');
-    const studioPeriod = document.getElementById('studio-period');
-
-    if (toggle) {
-      toggle.addEventListener('change', () => {
-        const yearly = toggle.checked;
-        if (proPrice) proPrice.textContent = yearly ? '8' : '12';
-        if (studioPrice) studioPrice.textContent = yearly ? '27' : '39';
-        if (proPeriod) proPeriod.textContent = yearly ? 'per month, billed yearly ($96/yr)' : 'per month, billed monthly';
-        if (studioPeriod) studioPeriod.textContent = yearly ? 'per month, billed yearly ($324/yr)' : 'per month, billed monthly';
-      });
-    }
+    
   </script>
 </body>
 </html>
