@@ -193,12 +193,11 @@
     </form>
   </div>
 
-  <div id="form-success" class="form-success" style="display: none; background: transparent !important; box-shadow: none;">
-    <div class="success-icon" style="width: 54px; height: 54px; background: var(--grad-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: white;">
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <h3 style="font-size: 1.6rem; margin-bottom: 8px;">Message Sent!</h3>
-    <p style="color: var(--text-secondary); font-size: 0.95rem; max-width: 320px; margin: 0 auto; line-height: 1.6;">
+ <div id="form-success" class="form-success" style="display: none; background: transparent !important; box-shadow: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; min-height: 380px;">
+    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 12px; color: var(--text-primary);">
+      Message Sent!
+    </h3>
+    <p style="color: var(--text-secondary); font-size: 1rem; max-width: 420px; margin: 0 auto; line-height: 1.6;">
       Thanks for reaching out. We'll get back to your email at <span id="success-email" style="font-weight: 600; color: var(--text-primary);"></span> within 24 hours.
     </p>
   </div>

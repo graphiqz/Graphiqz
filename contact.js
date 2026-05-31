@@ -167,7 +167,7 @@
 
       const errBanner = document.createElement('div');
       errBanner.style.cssText = 'padding:12px 16px;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;font-size:0.88rem;color:rgba(255,120,120,0.9);margin-top:14px;';
-      errBanner.textContent = 'Failed to send. Please try again or email us directly at hello@graphiqz.ai';
+      errBanner.textContent = 'Failed to send. Please try again or email us directly at s.i.m.p.l.e.media.3d@gmail.com';
       form.appendChild(errBanner);
     }
   });
