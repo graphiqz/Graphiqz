@@ -124,7 +124,7 @@
   }
 
   form.addEventListener('submit', async function (e) {
-    e.preventDefault(); // <-- THIS STOPS THE REFRESH
+    e.preventDefault(); // <-- STOPS THE PAGE FROM REFRESHING IMMEDIATELY
 
     clearErrors();
 
@@ -135,13 +135,13 @@
       message: document.getElementById('message')?.value.trim()
     };
 
-    // Validate inputs locally before sending
+    // Form Field Validation
     if (!data.name) return showError('name', 'Name is required');
     if (!data.email || !validateEmail(data.email)) return showError('email', 'Valid email is required');
     if (!data.subject) return showError('subject', 'Please select a topic');
     if (!data.message) return showError('message', 'Message cannot be empty');
 
-    // Loading state
+    // Button Loading State
     submitBtn.disabled = true;
     submitBtn.innerHTML = `
       <span style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;"></span>
@@ -151,12 +151,14 @@
     try {
       await sendEmail(data);
 
-      // Hide the active form input body cleanly
+      // Hide inputs cleanly
       if (formBody) formBody.style.display = 'none';
       
-      // Unhide and show the success box smoothly
+      // Populate and trigger centered text success display
+      const successEmailSlot = document.getElementById('success-email');
+      if (successEmailSlot) successEmailSlot.textContent = data.email;
+
       if (successState) {
-        successState.style.display = 'flex';
         successState.classList.add('show');
       }
 
@@ -166,7 +168,7 @@
       submitBtn.innerHTML = 'Send Message';
 
       const errBanner = document.createElement('div');
-      errBanner.style.cssText = 'padding:12px 16px;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;font-size:0.88rem;color:rgba(255,120,120,0.9);margin-top:14px;';
+      errBanner.style.cssText = 'padding:12px 16px;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;font-size:0.88rem;color:rgba(255,120,120,0.9);margin-top:14px;text-align:center;';
       errBanner.textContent = 'Failed to send. Please try again or email us directly at s.i.m.p.l.e.media.3d@gmail.com';
       form.appendChild(errBanner);
     }

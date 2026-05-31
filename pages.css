@@ -1044,7 +1044,10 @@
   text-align: center;
   padding: 60px 20px;
   width: 100%;
-  min-height: 380px; /* Ensures the glass box retains its perfect size */
+  min-height: 380px;
+  background: transparent !important; /* Forces inner background to disappear */
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .form-success.show {
