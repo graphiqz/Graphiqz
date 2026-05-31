@@ -458,11 +458,14 @@
   border-radius: var(--radius-md);
   transition: var(--transition);
   cursor: default;
+  border: 1px solid transparent; 
 }
 
 .why-feature:hover {
   background: var(--bg-glass);
   border: 1px solid var(--border-glass);
+  transform: translateY(-4px); 
+  box-shadow: var(--shadow-glass);
 }
 
 .why-feature-text h4 {
@@ -577,6 +580,13 @@
   font-size: 0.88rem;
   color: #fff;
   flex-shrink: 0;
+  overflow: hidden; 
+}
+
+.author-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
 }
 
 .author-name {
