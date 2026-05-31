@@ -1132,3 +1132,37 @@
   color: var(--text-secondary);
   line-height: 1.75;
 }
+/* ─── CTA Card Styles (Imported for About Page) ─── */
+.cta-card {
+  padding: 70px 60px;
+  border-radius: var(--radius-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grad-main);
+  opacity: 0.15;
+  z-index: -1;
+}
+
+/* ─── Mobile Perfect Alignment Fixes ─── */
+@media (max-width: 768px) {
+  .cta-card {
+    padding: 40px 20px !important;
+  }
+  
+  /* Forces the buttons to stack perfectly on mobile */
+  .cta-card div[style*="display:flex"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  
+  .cta-card .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
