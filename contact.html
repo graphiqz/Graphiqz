@@ -159,27 +159,51 @@
             </div>
 
             <!-- Form -->
-            <div id="form-body">
-              <form id="contact-form" novalidate>
+            <div class="contact-form-container glass">
   
-  <div class="form-fields-wrapper">
-    <div class="form-group">
-      <label for="name">Full Name</label>
-      <input type="text" id="name" class="form-input" placeholder="Your name" required />
-    </div>
-    
-    <button type="submit" id="submit-btn" class="btn btn-primary form-submit">
-      Send Message
-    </button>
+  <div id="form-body">
+    <form id="contact-form" novalidate>
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" class="form-input" placeholder="Your name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" class="form-input" placeholder="you@example.com" required />
+      </div>
+
+      <div class="form-group">
+        <label for="subject">Topic / Subject</label>
+        <select id="subject" class="form-select" required>
+          <option value="" disabled selected>Select an option</option>
+          <option value="general">General Inquiry</option>
+          <option value="support">Technical Support</option>
+          <option value="billing">Billing & Plans</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea id="message" class="form-textarea" placeholder="Tell us about your project..." required></textarea>
+      </div>
+
+      <button type="submit" id="submit-btn" class="btn btn-primary form-submit">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="white" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        Send Message
+      </button>
+    </form>
   </div>
 
-  <div id="form-success" class="form-success">
-    <div class="success-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24"><path fill="none" stroke="currentColor" stroke-width="3" d="M20 6L9 17l-5-5"/></svg>
+  <div id="form-success" class="form-success" style="display: none;">
+    <div class="success-icon" style="width: 50px; height: 50px; background: var(--grad-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: white;">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
-    <h3>Message Sent!</h3>
-    <p>Thanks for reaching out. We'll get back to your email at <span id="success-email"></span> within 24 hours.</p>
+    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 10px;">Message Sent!</h3>
+    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Thanks for reaching out. We'll get back to your email at <span id="success-email" style="color: var(--text-primary); font-weight: 600;"></span> within 24 hours.</p>
   </div>
+
+</div>
 
 </form>
             </div>

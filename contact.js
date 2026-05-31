@@ -147,31 +147,33 @@
     try {
       await sendEmail(data);
 
-      // Success - We hide the inner form fields element, NOT the whole column card!
-      const formFields = form.querySelector('.form-fields-wrapper') || form;
-      if (formFields !== form) {
-        formFields.style.display = 'none';
-      } else {
-        // Fallback: if you don't have a wrapper, hide the inputs/labels inside the form directly
-        Array.from(form.children).forEach(child => {
-          if (child !== successState) child.style.display = 'none';
-        });
+      // 1. Hide the entire active form structure smoothly
+      if (formBody) {
+        formBody.style.display = 'none';
+      } else if (form) {
+        // Fallback if form-body div is missing: just hide the form element itself
+        form.style.display = 'none';
       }
-      
-      if (successState) successState.classList.add('show');
+
+      // 2. Make sure the success box block unhides and shows up perfectly
+      if (successState) {
+        successState.style.display = 'flex';
+        successState.classList.add('show');
+      }
 
     } catch (err) {
       console.error('Send error:', err);
       submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Send Message';
+      submitBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="white" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        Send Message
+      `;
 
       const errBanner = document.createElement('div');
       errBanner.style.cssText = 'padding:12px 16px;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;font-size:0.88rem;color:rgba(255,120,120,0.9);margin-top:14px;';
       errBanner.textContent = 'Failed to send. Please try again or email us directly at hello@graphiqz.ai';
       form.appendChild(errBanner);
-      setTimeout(() => errBanner.remove(), 5000);
     }
-  });
 
   /* ─── Real-time Validation ─── */
   form.querySelectorAll('input, textarea, select').forEach(el => {

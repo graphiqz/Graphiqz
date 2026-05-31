@@ -1042,9 +1042,9 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
   width: 100%;
-  min-height: 350px; /* Forces the box to stay open and perfectly tall */
+  min-height: 380px; /* Ensures the glass box retains its perfect size */
 }
 
 .form-success.show {
