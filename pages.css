@@ -1022,7 +1022,7 @@
 
 /* Direct option element styling for dropdown lists */
 .form-select option {
-  background-color: #0d192d !important; /* Solid dark background matching dark theme */
+  background-color: #254d94 !important; /* Solid dark background matching dark theme */
   color: var(--text-primary) !important;
   padding: 12px;
 }
