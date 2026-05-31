@@ -1042,13 +1042,13 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 60px 20px;
-  min-height: 400px; /* Keeps the container tall and stable */
+  padding: 40px 20px;
   width: 100%;
+  min-height: 350px; /* Forces the box to stay open and perfectly tall */
 }
 
 .form-success.show {
-  display: flex;
+  display: flex !important;
 }
 
 .success-icon svg { width: 32px; height: 32px; fill: #fff; }

@@ -112,7 +112,7 @@
               <p style="color:#7AAACE;font-weight:600;margin-bottom:10px;">Message:</p>
               <p style="line-height:1.7;color:#F7F8F0;">${data.message.replace(/\n/g, '<br>')}</p>
             </div>
-            <p style="margin-top:24px;font-size:0.8rem;color:rgba(247,248,240,0.4);">Sent via Graphiqz Contact Form</p>
+            <p style="margin-top:24px;font-size:0.8rem;color:rgb(247, 248, 240);">Sent via Graphiqz Contact Form</p>
           </div>
         `
       })
@@ -147,8 +147,17 @@
     try {
       await sendEmail(data);
 
-      // Success
-      if (formBody) formBody.style.display = 'none';
+      // Success - We hide the inner form fields element, NOT the whole column card!
+      const formFields = form.querySelector('.form-fields-wrapper') || form;
+      if (formFields !== form) {
+        formFields.style.display = 'none';
+      } else {
+        // Fallback: if you don't have a wrapper, hide the inputs/labels inside the form directly
+        Array.from(form.children).forEach(child => {
+          if (child !== successState) child.style.display = 'none';
+        });
+      }
+      
       if (successState) successState.classList.add('show');
 
     } catch (err) {
