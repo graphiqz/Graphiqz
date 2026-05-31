@@ -159,10 +159,9 @@
             </div>
 
             <!-- Form -->
-            <div class="contact-form-container glass">
-  
-  <div id="form-body">
+            <div class="contact-form-container glass"> <div id="form-body" style="background: transparent !important; padding: 0; box-shadow: none;">
     <form id="contact-form" novalidate>
+      
       <div class="form-group">
         <label for="name">Full Name</label>
         <input type="text" id="name" class="form-input" placeholder="Your name" required />
@@ -189,20 +188,22 @@
       </div>
 
       <button type="submit" id="submit-btn" class="btn btn-primary form-submit">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="white" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         Send Message
       </button>
     </form>
   </div>
 
-  <div id="form-success" class="form-success" style="display: none;">
-    <div class="success-icon" style="width: 50px; height: 50px; background: var(--grad-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: white;">
+  <div id="form-success" class="form-success" style="display: none; background: transparent !important; box-shadow: none;">
+    <div class="success-icon" style="width: 54px; height: 54px; background: var(--grad-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: white;">
       <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
-    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 10px;">Message Sent!</h3>
-    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Thanks for reaching out. We'll get back to your email at <span id="success-email" style="color: var(--text-primary); font-weight: 600;"></span> within 24 hours.</p>
+    <h3 style="font-size: 1.6rem; margin-bottom: 8px;">Message Sent!</h3>
+    <p style="color: var(--text-secondary); font-size: 0.95rem; max-width: 320px; margin: 0 auto; line-height: 1.6;">
+      Thanks for reaching out. We'll get back to your email at <span id="success-email" style="font-weight: 600; color: var(--text-primary);"></span> within 24 hours.
+    </p>
   </div>
 
+</div>
 </div>
 
 </form>
