@@ -1012,12 +1012,20 @@
 .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
 
 .form-textarea {
-  resize: vertical;
+  resize: none; /* Allows up-down stretching but protects responsive card widths */
   min-height: 140px;
   line-height: 1.6;
 }
 
-.form-select { appearance: none; cursor: pointer; }
+/* Optional: To completely hide that corner resize drag block, change to: */
+/* resize: none; */
+
+/* Direct option element styling for dropdown lists */
+.form-select option {
+  background-color: #0d192d !important; /* Solid dark background matching dark theme */
+  color: var(--text-primary) !important;
+  padding: 12px;
+}
 
 .form-submit {
   margin-top: 20px;
@@ -1032,22 +1040,15 @@
   display: none;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
   text-align: center;
-  padding: 40px 20px;
+  padding: 60px 20px;
+  min-height: 400px; /* Keeps the container tall and stable */
+  width: 100%;
 }
 
-.form-success.show { display: flex; }
-
-.success-icon {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6bcb77, #4da75a);
+.form-success.show {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 32px rgba(107,203,119,0.4);
 }
 
 .success-icon svg { width: 32px; height: 32px; fill: #fff; }
