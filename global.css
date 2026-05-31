@@ -776,6 +776,27 @@ section {
   .grid-3 { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr; }
   .section-pad { padding: 70px 0; }
+  /* Fix Mobile Nav Layout */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  /* Shrink Toggle & Remove Circle */
+  .theme-toggle {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+  }
+  
+  .theme-toggle:hover {
+    background: transparent;
+    border: none;
+    transform: scale(1.1);
+  }
 }
 
 @media (max-width: 480px) {
