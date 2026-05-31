@@ -189,23 +189,20 @@
       </div>
 
       <button type="submit" id="submit-btn" class="btn btn-primary form-submit">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="white" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         Send Message
       </button>
     </form>
   </div>
 
-  <div id="form-success" class="form-success">
-    <h3 style="font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 12px; color: var(--text-primary); margin-top: 0;">
-      Message Sent!
-    </h3>
-    <p style="color: var(--text-secondary); font-size: 1rem; max-width: 420px; margin: 0 auto; line-height: 1.6;">
-      Thanks for reaching out. We'll get back to your email at s.i.m.p.l.e.media.3d@gmail.com within 24 hours.
-    </p>
+  <div id="form-success" class="form-success" style="display: none;">
+    <div class="success-icon" style="width: 50px; height: 50px; background: var(--grad-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: white;">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 10px;">Message Sent!</h3>
+    <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">Thanks for reaching out. We'll get back to your email at <span id="success-email" style="color: var(--text-primary); font-weight: 600;"></span> within 24 hours.</p>
   </div>
 
-</div>
-
-</div>
 </div>
 
 </form>
