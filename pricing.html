@@ -10,8 +10,12 @@
   <meta property="og:title" content="Graphiqz Pricing — Free, Pro & Studio Plans" />
   <meta property="og:description" content="Start free, upgrade when you're ready. Simple pricing for every creator." />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%239CD5FF'/><stop offset='100%25' stop-color='%234988C4'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='16' y='22' text-anchor='middle' font-size='18' fill='white' font-weight='bold'>G</text></svg>" />
-  <link rel="stylesheet" href="global.css" />
-  <link rel="stylesheet" href="pages.css" />
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/graphiqz/Graphiqz/main/css/global.css" />
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/graphiqz/Graphiqz/main/css/pages.css" />
+  <style>
+    /* FAQ button reset — override any browser defaults */
+    .faq-question { -webkit-appearance: none; appearance: none; background: none !important; border: none !important; box-shadow: none !important; }
+  </style>
   <style>
     .pricing-faq { padding: 80px 5%; }
     .pricing-guarantee {
@@ -46,30 +50,25 @@
 
   <!-- NAVBAR -->
   <nav class="navbar" role="navigation" aria-label="Main navigation">
-    <a href="index.html" class="logo" aria-label="Graphiqz Home">Graphiqz</a>
-
+    <a href="index.html" class="logo">Graphiqz</a>
     <ul class="nav-links" role="list">
-      <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+      <li><a href="index.html">Home</a></li>
       <li><a href="tool.html">Try Graphiqz</a></li>
-      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="pricing.html" class="active" aria-current="page">Pricing</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html">Contact Us</a></li>
     </ul>
-
     <div class="nav-actions">
-      <button class="theme-toggle" aria-label="Toggle dark/light theme">
+      <button class="theme-toggle" aria-label="Toggle theme">
         <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-14a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 17a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zM4.22 5.64a1 1 0 0 1 1.42-1.42l.7.71a1 1 0 0 1-1.41 1.41l-.71-.7zM17.66 19.07a1 1 0 1 1 1.41-1.41l.71.7a1 1 0 0 1-1.42 1.42l-.7-.71zM3 12a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1zm17 0a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2h-1a1 1 0 0 1-1-1zM5.64 19.07l-.7.71a1 1 0 0 1-1.42-1.42l.71-.7a1 1 0 0 1 1.41 1.41zM19.07 5.64a1 1 0 1 1 1.41 1.41l-.7.71a1 1 0 0 1-1.42-1.42l.71-.7z"/></svg>
         <svg class="theme-icon-moon" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
       <a href="tool.html" class="btn btn-primary">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        Start Creating
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Start Free
       </a>
-      
-      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
     </div>
+    <button class="menu-toggle" aria-label="Open menu"><span></span><span></span><span></span></button>
   </nav>
 
   <div class="mobile-nav" role="navigation">
@@ -100,6 +99,15 @@
 
       <!-- BILLING TOGGLE -->
       <div class="pricing-section">
+        <div class="pricing-toggle-wrap" role="group" aria-label="Billing period">
+          <span class="pricing-toggle-label">Monthly</span>
+          <label class="pricing-toggle" aria-label="Switch to yearly billing">
+            <input type="checkbox" id="billing-toggle" />
+            <span class="pricing-slider"></span>
+          </label>
+          <span class="pricing-toggle-label">Yearly</span>
+          <span class="pricing-save-badge">Save 30%</span>
+        </div>
 
         <!-- PRICING CARDS -->
         <div class="pricing-grid" role="list">
@@ -117,10 +125,6 @@
             <ul class="pricing-features" aria-label="Free plan features">
               <li class="pricing-feature">
                 <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
-                3 generations/day
-              </li>
-              <li class="pricing-feature">
-                <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
                 30fps animation rendering
               </li>
               <li class="pricing-feature">
@@ -133,7 +137,7 @@
               </li>
               <li class="pricing-feature">
                 <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
-                MP4 Format export
+                HTML animation export
               </li>
               <li class="pricing-feature">
                 <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
@@ -161,16 +165,12 @@
             <p class="pricing-plan-name" itemprop="name">Pro</p>
             <div class="pricing-price">
               <span class="price-currency">$</span>
-              <span class="price-amount" id="pro-price" data-monthly="12" data-yearly="8" itemprop="price">6</span>
+              <span class="price-amount" id="pro-price" data-monthly="12" data-yearly="8" itemprop="price">12</span>
             </div>
             <p class="price-period" id="pro-period">per month, billed monthly</p>
             <p class="pricing-desc" itemprop="description">For serious creators who need professional-grade output, longer animations, and full format support.</p>
             <div class="pricing-divider"></div>
             <ul class="pricing-features" aria-label="Pro plan features">
-              <li class="pricing-feature">
-                <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
-                15 generations/day
-              </li>
               <li class="pricing-feature">
                 <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
                 <strong>60fps</strong> silky smooth rendering
@@ -215,18 +215,13 @@
             <p class="pricing-plan-name" itemprop="name">Studio</p>
             <div class="pricing-price">
               <span class="price-currency">$</span>
-              <span class="price-amount" id="studio-price" data-monthly="39" data-yearly="27" itemprop="price">10</span>
+              <span class="price-amount" id="studio-price" data-monthly="39" data-yearly="27" itemprop="price">39</span>
             </div>
             <p class="price-period" id="studio-period">per month, billed monthly</p>
             <p class="pricing-desc" itemprop="description">For agencies and power users who demand maximum output, API access, and team collaboration.</p>
             <div class="pricing-divider"></div>
             <ul class="pricing-features" aria-label="Studio plan features">
               <li class="pricing-feature">
-                <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
-                30 generations/day
-              </li>
-              <li class="pricing-feature">
-              
                 <span class="feature-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="white" stroke-width="3" fill="none"/></svg></span>
                 Everything in Pro
               </li>
@@ -288,12 +283,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr><td>Credits</td><td>3</td><td>15</td><td>30</td></tr>
               <tr><td>Frame Rate</td><td>30fps</td><td>60fps</td><td>60fps</td></tr>
               <tr><td>Max Duration</td><td>5 seconds</td><td>15 seconds</td><td>15 seconds</td></tr>
               <tr><td>Aspect Ratios</td><td>16:9 only</td><td>All 5</td><td>All 5</td></tr>
               <tr><td>Monthly Generations</td><td>20</td><td>Unlimited</td><td>Unlimited</td></tr>
-              <tr><td>Export Format</td><td>MP4</td><td>HTML + MP4 (beta)</td><td>HTML + MP4</td></tr>
+              <tr><td>Export Format</td><td>HTML</td><td>HTML + MP4 (beta)</td><td>HTML + MP4 + API</td></tr>
               <tr><td>Commercial Use</td><td class="compare-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#6bcb77" stroke-width="3" fill="none"/></svg></td><td class="compare-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#6bcb77" stroke-width="3" fill="none"/></svg></td><td class="compare-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#6bcb77" stroke-width="3" fill="none"/></svg></td></tr>
               <tr><td>Priority Queue</td><td class="compare-x"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/></svg></td><td class="compare-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#6bcb77" stroke-width="3" fill="none"/></svg></td><td class="compare-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#6bcb77" stroke-width="3" fill="none"/></svg></td></tr>
               <tr><td>API Access</td><td class="compare-x"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/></svg></td><td class="compare-x"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2"/></svg></td><td class="compare-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="#6bcb77" stroke-width="3" fill="none"/></svg></td></tr>
@@ -313,7 +307,7 @@
         <p>Not happy with Pro or Studio? We'll refund you within 14 days of your first payment, no questions asked. Your satisfaction is our priority.</p>
       </div>
 
-    <!-- PRICING FAQ -->
+      <!-- PRICING FAQ -->
       <section class="pricing-faq" aria-labelledby="pfaq-heading">
         <div style="max-width:800px;margin:0 auto;">
           <div class="text-center" style="margin-bottom:48px;">
@@ -369,7 +363,7 @@
     </footer>
   </div>
 
-  <script src="https://raw.githubusercontent.com/graphiqz/Graphiqz/main/js/main.js"></script>
+  <script src="main.js"></script>
   <script>
     document.getElementById('copy-year').textContent = new Date().getFullYear();
 
