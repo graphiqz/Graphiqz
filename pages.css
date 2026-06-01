@@ -468,13 +468,54 @@
 
 /* ─── Tool Mobile ─── */
 @media (max-width: 900px) {
+  .tool-section {
+    padding: 24px 4% 40px;
+  }
+
   .tool-layout {
     grid-template-columns: 1fr;
     height: auto;
+    min-height: unset;
     max-height: none;
   }
-  .tool-panel { overflow-y: visible; }
-  .tool-previewer { min-height: 400px; }
+
+  .tool-panel {
+    overflow-y: visible;
+  }
+
+  .tool-previewer {
+    min-height: 360px;
+    height: 360px;
+  }
+
+  .tool-bottom {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .tool-bottom .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .tool-previewer {
+    min-height: 280px;
+    height: 280px;
+  }
+
+  .toggle-group {
+    gap: 6px;
+  }
+
+  .toggle-option label {
+    padding: 10px 6px;
+    font-size: 0.78rem;
+  }
 }
 
 /* =========================================================
@@ -1012,20 +1053,12 @@
 .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
 
 .form-textarea {
-  resize: none; /* Allows up-down stretching but protects responsive card widths */
+  resize: vertical;
   min-height: 140px;
   line-height: 1.6;
 }
 
-/* Optional: To completely hide that corner resize drag block, change to: */
-/* resize: none; */
-
-/* Direct option element styling for dropdown lists */
-.form-select option {
-  background-color: #254d94 !important; /* Solid dark background matching dark theme */
-  color: var(--text-primary) !important;
-  padding: 50px;
-}
+.form-select { appearance: none; cursor: pointer; }
 
 .form-submit {
   margin-top: 20px;
@@ -1040,18 +1073,22 @@
   display: none;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 16px;
   text-align: center;
-  padding: 60px 20px;
-  width: 100%;
-  min-height: 380px;
-  background: transparent !important; /* Forces inner background to disappear */
-  box-shadow: none !important;
-  border: none !important;
+  padding: 40px 20px;
 }
 
-.form-success.show {
-  display: flex !important;
+.form-success.show { display: flex; }
+
+.success-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6bcb77, #4da75a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(107,203,119,0.4);
 }
 
 .success-icon svg { width: 32px; height: 32px; fill: #fff; }
@@ -1062,111 +1099,4 @@
   .contact-layout { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
   .contact-form-wrap { padding: 28px 20px; }
-}
-/* ─── FAQ Accordion (Imported for Pricing Page) ─── */
-.faq-list {
-  margin-top: 60px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.faq-item {
-  border-radius: var(--radius-md);
-  background: var(--bg-glass);
-  border: 1px solid var(--border-glass);
-  backdrop-filter: blur(16px);
-  overflow: hidden;
-  transition: var(--transition);
-}
-
-.faq-item.open {
-  border-color: var(--border-glass-hover);
-  background: var(--bg-glass-strong);
-}
-
-.faq-question {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  text-align: left;
-}
-
-.faq-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--bg-glass);
-  border: 1px solid var(--border-glass);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: var(--transition);
-}
-
-.faq-icon svg { width: 14px; height: 14px; fill: var(--text-secondary); transition: var(--transition); }
-.faq-item.open .faq-icon { background: var(--grad-accent); border-color: transparent; }
-.faq-item.open .faq-icon svg { fill: #fff; transform: rotate(45deg); }
-
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.45s ease, padding 0.3s ease;
-}
-
-.faq-item.open .faq-answer { max-height: 300px; }
-
-.faq-answer p {
-  padding: 0 24px 22px;
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1.75;
-}
-/* ─── CTA Card Styles (Imported for About Page) ─── */
-.cta-card {
-  padding: 70px 60px;
-  border-radius: var(--radius-xl);
-  position: relative;
-  overflow: hidden;
-}
-
-.cta-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--grad-main);
-  opacity: 0.15;
-  z-index: -1;
-}
-
-/* ─── Mobile Perfect Alignment Fixes ─── */
-@media (max-width: 768px) {
-  .cta-card {
-    padding: 40px 20px !important;
-  }
-  
-  /* Forces the buttons to stack perfectly on mobile */
-  .cta-card div[style*="display:flex"] {
-    flex-direction: column !important;
-    align-items: stretch !important;
-  }
-  
-  .cta-card .btn {
-    width: 100%;
-    justify-content: center;
-  }
 }
