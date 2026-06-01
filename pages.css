@@ -1024,7 +1024,7 @@
 .form-select option {
   background-color: #254d94 !important; /* Solid dark background matching dark theme */
   color: var(--text-primary) !important;
-  padding: 12px;
+  padding: 50px;
 }
 
 .form-submit {
