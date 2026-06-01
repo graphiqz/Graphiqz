@@ -313,7 +313,7 @@
         <p>Not happy with Pro or Studio? We'll refund you within 14 days of your first payment, no questions asked. Your satisfaction is our priority.</p>
       </div>
 
-      <!-- PRICING FAQ -->
+    <!-- PRICING FAQ -->
       <section class="pricing-faq" aria-labelledby="pfaq-heading">
         <div style="max-width:800px;margin:0 auto;">
           <div class="text-center" style="margin-bottom:48px;">
@@ -321,7 +321,7 @@
             <h2 class="section-title fade-up" id="pfaq-heading">Pricing <span class="gradient-text">FAQs</span></h2>
             <div class="grad-divider"></div>
           </div>
-         <div class="faq-list" itemscope itemtype="https://schema.org/FAQPage">
+          <div class="faq-list">
             <div class="faq-item">
               <button class="faq-question" aria-expanded="false">
                 Can I cancel my plan at any time?
@@ -369,11 +369,26 @@
     </footer>
   </div>
 
-  <script src="main.js"></script>
+  <script src="https://raw.githubusercontent.com/graphiqz/Graphiqz/main/js/main.js"></script>
   <script>
     document.getElementById('copy-year').textContent = new Date().getFullYear();
 
-    
+    // Billing toggle price switch
+    const toggle = document.getElementById('billing-toggle');
+    const proPrice = document.getElementById('pro-price');
+    const studioPrice = document.getElementById('studio-price');
+    const proPeriod = document.getElementById('pro-period');
+    const studioPeriod = document.getElementById('studio-period');
+
+    if (toggle) {
+      toggle.addEventListener('change', () => {
+        const yearly = toggle.checked;
+        if (proPrice) proPrice.textContent = yearly ? '8' : '12';
+        if (studioPrice) studioPrice.textContent = yearly ? '27' : '39';
+        if (proPeriod) proPeriod.textContent = yearly ? 'per month, billed yearly ($96/yr)' : 'per month, billed monthly';
+        if (studioPeriod) studioPeriod.textContent = yearly ? 'per month, billed yearly ($324/yr)' : 'per month, billed monthly';
+      });
+    }
   </script>
 </body>
 </html>
