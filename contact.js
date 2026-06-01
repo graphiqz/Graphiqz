@@ -137,30 +137,45 @@
       message: document.getElementById('message')?.value.trim()
     };
 
-    // Loading state
+    // Show loading spinner on button only — keep form visible
     submitBtn.disabled = true;
     submitBtn.innerHTML = `
-      <span style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;"></span>
+      <span style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px;vertical-align:middle;"></span>
       Sending...
     `;
 
     try {
       await sendEmail(data);
 
-      // Success
+      // Hide form, show success message
       if (formBody) formBody.style.display = 'none';
-      if (successState) successState.classList.add('show');
+      if (successState) {
+        successState.style.display = 'flex';
+        successState.style.flexDirection = 'column';
+        successState.style.alignItems = 'center';
+        successState.style.textAlign = 'center';
+        successState.style.padding = '50px 20px';
+      }
 
     } catch (err) {
       console.error('Send error:', err);
+
+      // Restore button so user can retry
       submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Send Message';
+      submitBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" style="margin-right:8px;"><path fill="white" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        Try Again
+      `;
+
+      // Remove any old error banners first
+      form.querySelectorAll('.err-banner').forEach(el => el.remove());
 
       const errBanner = document.createElement('div');
-      errBanner.style.cssText = 'padding:12px 16px;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;font-size:0.88rem;color:rgba(255,120,120,0.9);margin-top:14px;';
+      errBanner.className = 'err-banner';
+      errBanner.style.cssText = 'padding:12px 16px;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;font-size:0.88rem;color:rgba(255,120,120,0.9);margin-top:14px;line-height:1.5;';
       errBanner.textContent = 'Failed to send. Please try again or email us directly at hello@graphiqz.ai';
       form.appendChild(errBanner);
-      setTimeout(() => errBanner.remove(), 5000);
+      setTimeout(() => errBanner.remove(), 6000);
     }
   });
 
