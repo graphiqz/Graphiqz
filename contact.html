@@ -23,18 +23,27 @@
       box-shadow: 0 8px 32px rgba(107,203,119,0.4);
       /* Paste this into your <style> section or style.css file */
 #form-success {
-    display: none; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 40px 20px;
-    width: 100%;
-    margin: 0 auto;
+    display: none !important; /* Start hidden */
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    position: absolute !important; /* Force it to overlay correctly */
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 10 !important;
+
 }
 .success-icon {
     font-size: 3rem;
     margin-bottom: 15px;
+}
+/* Paste it here, replacing 'card' with your actual container class name */
+.form-body {
+    position: relative !important;
+    min-height: 400px;
 }
     }
   </style>

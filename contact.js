@@ -141,12 +141,15 @@ form.addEventListener('submit', async function (e) {
       body: formData
     });
 
-    if (response.status === 200) {
-      // This hides the form so the success message can take the center spot
-      form.style.display = 'none'; 
-      document.getElementById('success-email').textContent = data.email;
-      document.getElementById('form-success').style.display = 'flex';
-    } else {
+    // In the success block:
+if (response.status === 200) {
+    form.style.display = 'none'; // Hide the form
+    document.getElementById('success-email').textContent = data.email;
+    
+    const successDiv = document.getElementById('form-success');
+    successDiv.style.display = 'flex'; // Use flex to center the content
+    successDiv.style.opacity = '1';
+} else {
       throw new Error("Failed");
     }
   } catch (err) {
