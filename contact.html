@@ -21,6 +21,21 @@
       display: flex; align-items: center; justify-content: center;
       margin: 0 auto 16px;
       box-shadow: 0 8px 32px rgba(107,203,119,0.4);
+      /* Paste this into your <style> section or style.css file */
+#form-success {
+    display: none; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    width: 100%;
+    margin: 0 auto;
+}
+.success-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
     }
   </style>
 </head>
@@ -194,9 +209,14 @@
 </form>
 
 <!-- This is the success box that appears after they click send -->
-<div id="form-success" class="form-success" style="display: none;">
-  <h3 style="font-size: 1.8rem; margin-bottom: 12px; color: var(--text-primary);">Message Sent!</h3>
-  <p style="color: var(--text-secondary);">Thanks for reaching out. We'll get back to your email at <span id="success-email" style="font-weight: 600;"></span> within 24 hours.</p>
+<!-- Paste this inside your contact.html, after the </form> tag closes -->
+<div id="form-success" class="form-success">
+  <div class="success-icon">✅</div>
+  <h3 style="font-size: 1.8rem; margin-bottom: 12px; color: white;">Message Sent!</h3>
+  <p style="color: #ccc;">
+    Thank you for reaching out. Our team will respond to 
+    <span id="success-email" style="font-weight: 600; color: white;"></span> within 24 hours.
+  </p>
 </div>
 
         </div>

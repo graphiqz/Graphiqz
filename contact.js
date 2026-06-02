@@ -125,17 +125,12 @@
 
   /* ─── Submit Handler ─── */
 
+// Paste this inside your js/contact.js file
 form.addEventListener('submit', async function (e) {
-  e.preventDefault(); // Prevents page reload
-
+  e.preventDefault();
+  
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
-
-  // Simple validation
-  if (!data.name || !data.email || !data.message) {
-    alert("Please fill in all fields.");
-    return;
-  }
 
   submitBtn.disabled = true;
   submitBtn.textContent = "Sending...";
@@ -147,15 +142,15 @@ form.addEventListener('submit', async function (e) {
     });
 
     if (response.status === 200) {
-      formBody.style.display = 'none';
+      // This hides the form so the success message can take the center spot
+      form.style.display = 'none'; 
       document.getElementById('success-email').textContent = data.email;
-      successState.style.display = 'flex';
-      successState.classList.add('show');
+      document.getElementById('form-success').style.display = 'flex';
     } else {
-      throw new Error("Failed to send");
+      throw new Error("Failed");
     }
   } catch (err) {
-    alert("Failed to send. Email us at s.i.m.p.l.e.media.3d@gmail.com");
+    alert("Error sending message.");
     submitBtn.disabled = false;
     submitBtn.textContent = "Send Message";
   }
