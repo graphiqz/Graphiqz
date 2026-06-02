@@ -124,73 +124,42 @@
   }
 
   /* ─── Submit Handler ─── */
- form.addEventListener('submit', async function (e) {
-    e.preventDefault();
 
-    clearErrors();
+form.addEventListener('submit', async function (e) {
+  e.preventDefault(); // Prevents page reload
 
-    // We use FormData to easily grab all inputs, including the hidden access_key
-    const formData = new FormData(form);
-    
-    // For validation and the success message
-    const data = {
-      name: document.getElementById('name')?.value.trim(),
-      email: document.getElementById('email')?.value.trim(),
-      subject: document.getElementById('subject')?.value.trim(),
-      message: document.getElementById('message')?.value.trim()
-    };
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
 
-    // Validation checks
-    if (!data.name) return showError('name', 'Name is required');
-    if (!data.email || !validateEmail(data.email)) return showError('email', 'Valid email is required');
-    if (!data.subject) return showError('subject', 'Please select a topic');
-    if (!data.message) return showError('message', 'Message cannot be empty');
+  // Simple validation
+  if (!data.name || !data.email || !data.message) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
-    // Button loading animation state
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = `
-      <span style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;"></span>
-      Sending...
-    `;
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Sending...";
 
-    try {
-      // Send the data securely to Web3Forms
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData
-      });
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData
+    });
 
-      const result = await response.json();
-
-      if (response.status === 200) {
-        // 1. Hide the input form wrapper container
-        if (formBody) formBody.style.display = 'none';
-        
-        // 2. Inject the submitted email address into the text slot
-        const successEmailSlot = document.getElementById('success-email');
-        if (successEmailSlot) successEmailSlot.textContent = data.email;
-
-        // 3. Flex open the centered success message text box
-        if (successState) {
-          successState.style.display = 'flex';
-          successState.classList.add('show');
-        }
-      } else {
-        throw new Error(result.message);
-      }
-
-    } catch (err) {
-      console.error('Send error:', err);
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Send Message';
-
-      // Error banner
-      const errBanner = document.createElement('div');
-      errBanner.style.cssText = 'padding:12px 16px;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;font-size:0.88rem;color:rgba(255,120,120,0.9);margin-top:14px;text-align:center;';
-      errBanner.textContent = 'Failed to send. Please try again or email us directly at s.i.m.p.l.e.media.3d@gmail.com';
-      form.appendChild(errBanner);
+    if (response.status === 200) {
+      formBody.style.display = 'none';
+      document.getElementById('success-email').textContent = data.email;
+      successState.style.display = 'flex';
+      successState.classList.add('show');
+    } else {
+      throw new Error("Failed to send");
     }
-  });
+  } catch (err) {
+    alert("Failed to send. Email us at s.i.m.p.l.e.media.3d@gmail.com");
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Send Message";
+  }
+});
 
   /* ─── Real-time Validation ─── */
   form.querySelectorAll('input, textarea, select').forEach(el => {

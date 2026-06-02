@@ -159,101 +159,45 @@
 
             <!-- Form -->
             <div id="form-body">
-             <form id="contact-form" novalidate>
+            <form id="contact-form" novalidate>
+  <!-- IMPORTANT: Paste your Web3Forms Access Key here -->
   <input type="hidden" name="access_key" value="57ceecfb-da57-4974-a576-c93c1f05ec67">
-                <div class="form-grid">
 
-                  <div class="form-group">
-                    <label for="name">Full Name <span aria-label="required">*</span></label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      class="form-input"
-                      placeholder="e.g. Zaid Ansari"
-                      autocomplete="name"
-                      required
-                      aria-required="true"
-                    />
-                  </div>
+  <div class="form-group">
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required />
+  </div>
 
-                  <div class="form-group">
-                    <label for="email">Email Address <span aria-label="required">*</span></label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      class="form-input"
-                      placeholder="you@example.com"
-                      autocomplete="email"
-                      required
-                      aria-required="true"
-                    />
-                  </div>
+  <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required />
+  </div>
 
-                  <div class="form-group">
-                    <label for="company">Company / Organization</label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      class="form-input"
-                      placeholder="Optional"
-                      autocomplete="organization"
-                    />
-                  </div>
+  <div class="form-group">
+    <label for="subject">Topic / Subject</label>
+    <select id="subject" name="subject" class="form-select" required>
+      <option value="" disabled selected>Select an option</option>
+      <option value="general">General Inquiry</option>
+      <option value="support">Technical Support</option>
+      <option value="billing">Billing & Plans</option>
+    </select>
+  </div>
 
-                  <div class="form-group">
-                    <label for="subject">Subject <span aria-label="required">*</span></label>
-                    <div class="custom-select-wrap">
-                      <select id="subject" name="subject" class="form-select" required aria-required="true">
-                        <option value="" disabled selected>Select a topic...</option>
-                        <option value="General Inquiry">General Inquiry</option>
-                        <option value="Technical Support">Technical Support</option>
-                        <option value="Billing & Plans">Billing &amp; Plans</option>
-                        <option value="Partnership / Collaboration">Partnership / Collaboration</option>
-                        <option value="Enterprise Sales">Enterprise Sales</option>
-                        <option value="Feature Request">Feature Request</option>
-                        <option value="Bug Report">Bug Report</option>
-                        <option value="Press / Media">Press / Media</option>
-                      </select>
-                      <span class="select-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-                      </span>
-                    </div>
-                  </div>
+  <div class="form-group">
+    <label for="message">Your Message</label>
+    <textarea id="message" name="message" class="form-textarea" placeholder="Tell us about your project..." required></textarea>
+  </div>
 
-                  <div class="form-group full">
-                    <label for="message">Your Message <span aria-label="required">*</span></label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      class="form-textarea"
-                      placeholder="Tell us what's on your mind. The more detail you provide, the better we can help."
-                      required
-                      aria-required="true"
-                      minlength="20"
-                    ></textarea>
-                  </div>
+  <button type="submit" id="submit-btn" class="btn btn-primary form-submit">
+    Send Message
+  </button>
+</form>
 
-                  <!-- Honeypot (spam protection) -->
-                  <input type="text" name="website" style="display:none;" tabindex="-1" autocomplete="off" aria-hidden="true" />
-
-                </div>
-
-                <p style="font-size:0.78rem;color:var(--text-muted);margin-top:14px;line-height:1.6;">
-                  By submitting this form, you agree to our
-                  <a href="#" style="background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Privacy Policy</a>.
-                  We never share your information with third parties.
-                </p>
-
-                <button type="submit" id="submit-btn" class="btn btn-primary form-submit" aria-label="Send message">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="white" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                  Send Message
-                </button>
-              </form>
-            </div>
-          </div>
+<!-- This is the success box that appears after they click send -->
+<div id="form-success" class="form-success" style="display: none;">
+  <h3 style="font-size: 1.8rem; margin-bottom: 12px; color: var(--text-primary);">Message Sent!</h3>
+  <p style="color: var(--text-secondary);">Thanks for reaching out. We'll get back to your email at <span id="success-email" style="font-weight: 600;"></span> within 24 hours.</p>
+</div>
 
         </div>
       </section>
