@@ -124,58 +124,71 @@
   }
 
   /* ─── Submit Handler ─── */
-  form.addEventListener('submit', async (e) => {
+ form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    if (!validate()) return;
+    clearErrors();
 
+    // We use FormData to easily grab all inputs, including the hidden access_key
+    const formData = new FormData(form);
+    
+    // For validation and the success message
     const data = {
       name: document.getElementById('name')?.value.trim(),
       email: document.getElementById('email')?.value.trim(),
-      company: document.getElementById('company')?.value.trim(),
       subject: document.getElementById('subject')?.value.trim(),
       message: document.getElementById('message')?.value.trim()
     };
 
-    // Show loading spinner on button only — keep form visible
+    // Validation checks
+    if (!data.name) return showError('name', 'Name is required');
+    if (!data.email || !validateEmail(data.email)) return showError('email', 'Valid email is required');
+    if (!data.subject) return showError('subject', 'Please select a topic');
+    if (!data.message) return showError('message', 'Message cannot be empty');
+
+    // Button loading animation state
     submitBtn.disabled = true;
     submitBtn.innerHTML = `
-      <span style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px;vertical-align:middle;"></span>
+      <span style="display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.8s linear infinite;"></span>
       Sending...
     `;
 
     try {
-      await sendEmail(data);
+      // Send the data securely to Web3Forms
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
 
-      // Hide form, show success message
-      if (formBody) formBody.style.display = 'none';
-      if (successState) {
-        successState.style.display = 'flex';
-        successState.style.flexDirection = 'column';
-        successState.style.alignItems = 'center';
-        successState.style.textAlign = 'center';
-        successState.style.padding = '50px 20px';
+      const result = await response.json();
+
+      if (response.status === 200) {
+        // 1. Hide the input form wrapper container
+        if (formBody) formBody.style.display = 'none';
+        
+        // 2. Inject the submitted email address into the text slot
+        const successEmailSlot = document.getElementById('success-email');
+        if (successEmailSlot) successEmailSlot.textContent = data.email;
+
+        // 3. Flex open the centered success message text box
+        if (successState) {
+          successState.style.display = 'flex';
+          successState.classList.add('show');
+        }
+      } else {
+        throw new Error(result.message);
       }
 
     } catch (err) {
       console.error('Send error:', err);
-
-      // Restore button so user can retry
       submitBtn.disabled = false;
-      submitBtn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" style="margin-right:8px;"><path fill="white" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-        Try Again
-      `;
+      submitBtn.innerHTML = 'Send Message';
 
-      // Remove any old error banners first
-      form.querySelectorAll('.err-banner').forEach(el => el.remove());
-
+      // Error banner
       const errBanner = document.createElement('div');
-      errBanner.className = 'err-banner';
-      errBanner.style.cssText = 'padding:12px 16px;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;font-size:0.88rem;color:rgba(255,120,120,0.9);margin-top:14px;line-height:1.5;';
-      errBanner.textContent = 'Failed to send. Please try again or email us directly at hello@graphiqz.ai';
+      errBanner.style.cssText = 'padding:12px 16px;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;font-size:0.88rem;color:rgba(255,120,120,0.9);margin-top:14px;text-align:center;';
+      errBanner.textContent = 'Failed to send. Please try again or email us directly at s.i.m.p.l.e.media.3d@gmail.com';
       form.appendChild(errBanner);
-      setTimeout(() => errBanner.remove(), 6000);
     }
   });
 
