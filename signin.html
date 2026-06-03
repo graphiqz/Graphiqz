@@ -404,7 +404,7 @@
 
       if (error) return showMsg(error.message, 'error');
       showMsg('Signed in! Redirecting...', 'success');
-      setTimeout(() => window.location.href = 'pages/tool.html', 1200);
+      setTimeout(() => window.location.href = '/tool.html', 1200);
     }
 
     // ── Sign Up ──
@@ -459,7 +459,7 @@
 
     // ── Check if already logged in ──
     _supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) window.location.href = 'pages/tool.html';
+      if (session) window.location.href = '/tool.html';
     });
   </script>
 </body>
