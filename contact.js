@@ -147,7 +147,12 @@ if (response.status === 200) {
     document.getElementById('success-email').textContent = data.email;
     
     const successDiv = document.getElementById('form-success');
-    successDiv.style.display = 'flex'; // Use flex to center the content
+    successDiv.style.display = 'flex';
+successDiv.style.flexDirection = 'column';
+successDiv.style.alignItems = 'center';
+successDiv.style.gap = '16px';
+successDiv.style.padding = '50px 20px';
+successDiv.style.textAlign = 'center';
     successDiv.style.opacity = '1';
 } else {
       throw new Error("Failed");
