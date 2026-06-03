@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In — Graphiqz</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%239CD5FF'/><stop offset='100%25' stop-color='%234988C4'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='16' y='22' text-anchor='middle' font-size='18' fill='white' font-weight='bold'>G</text></svg>" />
+  <link rel="stylesheet" href="global.css" />
+  <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .auth-wrapper {
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .auth-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .auth-card {
+      padding: 40px 36px;
+      border-radius: var(--radius-xl);
+      background: var(--bg-glass);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      border: 1px solid var(--border-glass);
+      box-shadow: var(--shadow-card);
+    }
+
+    .auth-title {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .auth-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    /* Tabs */
+    .auth-tabs {
+      display: flex;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      margin-bottom: 28px;
+      border: 1px solid var(--border-glass);
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 9px;
+      border: none;
+      background: none;
+      border-radius: calc(var(--radius-md) - 2px);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .auth-tab.active {
+      background: var(--grad-accent);
+      color: #fff;
+      box-shadow: 0 2px 12px rgba(73,136,196,0.4);
+    }
+
+    /* Form fields */
+    .auth-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 16px;
+    }
+
+    .auth-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .auth-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .auth-input:focus {
+      border-color: rgba(73,136,196,0.5);
+      box-shadow: 0 0 0 3px rgba(73,136,196,0.1);
+      background: var(--bg-glass);
+    }
+
+    .auth-input::placeholder { color: var(--text-muted); }
+
+    .auth-btn {
+      width: 100%;
+      padding: 13px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      justify-content: center;
+      margin-top: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Divider */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-glass);
+    }
+
+    .auth-divider span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    /* Google button */
+    .google-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-glass);
+      background: var(--bg-glass);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: var(--transition);
+      backdrop-filter: blur(10px);
+    }
+
+    .google-btn:hover {
+      background: var(--bg-glass-strong);
+      border-color: var(--border-glass-hover);
+      transform: translateY(-1px);
+    }
+
+    .google-btn svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    /* Error / Success messages */
+    .auth-msg {
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    .auth-msg.error {
+      background: rgba(255,100,100,0.1);
+      border: 1px solid rgba(255,100,100,0.3);
+      color: rgba(255,130,130,0.95);
+      display: block;
+    }
+
+    .auth-msg.success {
+      background: rgba(107,203,119,0.1);
+      border: 1px solid rgba(107,203,119,0.3);
+      color: rgba(107,203,119,0.95);
+      display: block;
+    }
+
+    /* Forgot password */
+    .auth-forgot {
+      text-align: right;
+      margin-top: -8px;
+      margin-bottom: 16px;
+    }
+
+    .auth-forgot button {
+      background: none;
+      border: none;
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: var(--grad-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+
+    .auth-footer-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .auth-footer-text a {
+      background: var(--grad-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* Loading spinner inside button */
+    .btn-spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Panel switching */
+    .auth-panel { display: none; }
+    .auth-panel.active { display: block; }
+
+    @media (max-width: 480px) {
+      .auth-card { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="bg-mesh-extra"></div>
+  </div>
+
+  <div class="auth-wrapper">
+
+    <!-- Logo -->
+    <div class="auth-logo">
+      <a href="index.html" class="logo" style="font-size:2rem;">Graphiqz</a>
+    </div>
+
+    <div class="auth-card">
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-subtitle">Sign in to your Graphiqz account</p>
+
+      <!-- Tabs -->
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" id="tab-signin" role="tab" onclick="switchTab('signin')">Sign In</button>
+        <button class="auth-tab" id="tab-signup" role="tab" onclick="switchTab('signup')">Create Account</button>
+      </div>
+
+      <!-- Message box -->
+      <div class="auth-msg" id="auth-msg"></div>
+
+      <!-- SIGN IN PANEL -->
+      <div class="auth-panel active" id="panel-signin">
+        <div class="auth-group">
+          <label for="signin-email">Email Address</label>
+          <input type="email" id="signin-email" class="auth-input" placeholder="you@example.com" autocomplete="email" />
+        </div>
+        <div class="auth-group">
+          <label for="signin-password">Password</label>
+          <input type="password" id="signin-password" class="auth-input" placeholder="••••••••" autocomplete="current-password" />
+        </div>
+        <div class="auth-forgot">
+          <button onclick="forgotPassword()" type="button">Forgot password?</button>
+        </div>
+        <button class="btn btn-primary auth-btn" onclick="signIn()" id="signin-btn">Sign In</button>
+
+        <div class="auth-divider"><span>or continue with</span></div>
+
+        <button class="google-btn" onclick="signInWithGoogle()" id="google-btn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+      </div>
+
+      <!-- SIGN UP PANEL -->
+      <div class="auth-panel" id="panel-signup">
+        <div class="auth-group">
+          <label for="signup-name">Full Name</label>
+          <input type="text" id="signup-name" class="auth-input" placeholder="Your name" autocomplete="name" />
+        </div>
+        <div class="auth-group">
+          <label for="signup-email">Email Address</label>
+          <input type="email" id="signup-email" class="auth-input" placeholder="you@example.com" autocomplete="email" />
+        </div>
+        <div class="auth-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" class="auth-input" placeholder="Min. 8 characters" autocomplete="new-password" />
+        </div>
+        <button class="btn btn-primary auth-btn" onclick="signUp()" id="signup-btn">Create Account</button>
+
+        <div class="auth-divider"><span>or continue with</span></div>
+
+        <button class="google-btn" onclick="signInWithGoogle()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+      </div>
+
+      <p class="auth-footer-text">
+        By continuing, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // ── Supabase Init ──
+    const { createClient } = supabase;
+    const _supabase = createClient(
+      'https://kapcgaowheesxevklbfk.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthcGNnYW93aGVlc3hldmtsYmZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzgyOTgsImV4cCI6MjA5NjA1NDI5OH0.BIZfJEzEgAMXiNgyQL1t9WtdC6zVjlSjjWOZUNgdRSs'
+    );
+
+    // ── Tab Switch ──
+    function switchTab(tab) {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      document.getElementById('panel-' + tab).classList.add('active');
+      clearMsg();
+    }
+
+    // ── Message Helpers ──
+    function showMsg(text, type) {
+      const el = document.getElementById('auth-msg');
+      el.textContent = text;
+      el.className = 'auth-msg ' + type;
+    }
+    function clearMsg() {
+      const el = document.getElementById('auth-msg');
+      el.textContent = '';
+      el.className = 'auth-msg';
+    }
+
+    function setLoading(btnId, loading) {
+      const btn = document.getElementById(btnId);
+      if (loading) {
+        btn.disabled = true;
+        btn.innerHTML = '<span class="btn-spinner"></span> Please wait...';
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = btnId === 'signin-btn' ? 'Sign In' : 'Create Account';
+      }
+    }
+
+    // ── Sign In ──
+    async function signIn() {
+      const email = document.getElementById('signin-email').value.trim();
+      const password = document.getElementById('signin-password').value;
+      if (!email || !password) return showMsg('Please fill in all fields.', 'error');
+
+      setLoading('signin-btn', true);
+      const { error } = await _supabase.auth.signInWithPassword({ email, password });
+      setLoading('signin-btn', false);
+
+      if (error) return showMsg(error.message, 'error');
+      showMsg('Signed in! Redirecting...', 'success');
+      setTimeout(() => window.location.href = 'pages/tool.html', 1200);
+    }
+
+    // ── Sign Up ──
+    async function signUp() {
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+
+      if (!name || !email || !password) return showMsg('Please fill in all fields.', 'error');
+      if (password.length < 8) return showMsg('Password must be at least 8 characters.', 'error');
+
+      setLoading('signup-btn', true);
+      const { error } = await _supabase.auth.signUp({
+        email, password,
+        options: { data: { full_name: name } }
+      });
+      setLoading('signup-btn', false);
+
+      if (error) return showMsg(error.message, 'error');
+      showMsg('Account created! Check your email to confirm.', 'success');
+    }
+
+    // ── Google Sign In ──
+    async function signInWithGoogle() {
+      const { error } = await _supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: 'https://graphiqz.github.io/Graphiqz/pages/tool.html'
+        }
+      });
+      if (error) showMsg(error.message, 'error');
+    }
+
+    // ── Forgot Password ──
+    async function forgotPassword() {
+      const email = document.getElementById('signin-email').value.trim();
+      if (!email) return showMsg('Enter your email above first.', 'error');
+
+      const { error } = await _supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: 'https://graphiqz.github.io/Graphiqz/signin.html'
+      });
+      if (error) return showMsg(error.message, 'error');
+      showMsg('Password reset email sent! Check your inbox.', 'success');
+    }
+
+    // ── Enter key support ──
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter') return;
+      if (document.getElementById('panel-signin').classList.contains('active')) signIn();
+      else signUp();
+    });
+
+    // ── Check if already logged in ──
+    _supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) window.location.href = 'pages/tool.html';
+    });
+  </script>
+</body>
+</html>
