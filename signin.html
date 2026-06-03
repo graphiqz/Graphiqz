@@ -404,7 +404,7 @@
 
       if (error) return showMsg(error.message, 'error');
       showMsg('Signed in! Redirecting...', 'success');
-      setTimeout(() => window.location.href = '/tool.html', 1200);
+      setTimeout(() => window.location.href = 'pages/tool.html', 1200);
     }
 
     // ── Sign Up ──
@@ -432,7 +432,7 @@
       const { error } = await _supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://graphiqz.github.io/Graphiqz/pages/tool.html'
+          redirectTo: 'https://graphiqz.github.io/Graphiqz/tool.html'
         }
       });
       if (error) showMsg(error.message, 'error');
