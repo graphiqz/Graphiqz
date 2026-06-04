@@ -2,7 +2,7 @@
    GRAPHIQZ — Core JavaScript
    Theme | Navbar | Scroll Animations | Counters | FAQ
    ========================================================= */
-
+const { createClient } = supabase;
 (function () {
   'use strict';
 
@@ -89,125 +89,124 @@
       this.setActiveLink();
     },
 async initUserIcon() {
-  const { createClient } = supabase;
   const _supabase = createClient(
     'https://kapcgaowheesxevklbfk.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthcGNnYW93aGVlc3hldmtsYmZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzgyOTgsImV4cCI6MjA5NjA1NDI5OH0.BIZfJEzEgAMXiNgyQL1t9WtdC6zVjlSjjWOZUNgdRSs'
   );
 
-  const { data: { session } } = await _supabase.auth.getSession();
-  const navActions = document.querySelector('.nav-actions');
-  if (!navActions) return;
+  function renderAvatar(session) {
+    const navActions = document.querySelector('.nav-actions');
+    if (!navActions) return;
 
-  if (session) {
-    const name = session.user.user_metadata?.full_name || session.user.email;
-    const letter = name.charAt(0).toUpperCase();
-
-    // Remove sign in button if present, add avatar
+    // Clean up any existing avatar or sign in btn first
+    const existing = navActions.querySelector('#user-avatar');
     const existingSignIn = navActions.querySelector('a[href="signin.html"]');
+    if (existing) existing.remove();
     if (existingSignIn) existingSignIn.remove();
 
-    const avatar = document.createElement('div');
-    avatar.id = 'user-avatar';
-    avatar.style.cssText = `
-      width:38px;height:38px;border-radius:50%;
-      background:var(--grad-accent);
-      display:flex;align-items:center;justify-content:center;
-      font-weight:700;font-size:0.95rem;color:#fff;
-      cursor:pointer;position:relative;
-      box-shadow:0 2px 12px rgba(73,136,196,0.45);
-      flex-shrink:0;user-select:none;
-      border:2px solid rgba(73,136,196,0.4);
-    `;
-    avatar.textContent = letter;
-
-    const dropdown = document.createElement('div');
-    dropdown.id = 'user-dropdown';
-    dropdown.style.cssText = `
-      position:absolute;top:calc(100% + 10px);right:0;
-      min-width:200px;padding:8px;
-      background:var(--bg-glass-strong);
-      backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-      border:1px solid var(--border-glass);
-      border-radius:var(--radius-md);
-      box-shadow:var(--shadow-card);
-      display:none;z-index:9999;
-    `;
-
-    const nameEl = document.createElement('div');
-    nameEl.style.cssText = `
-      padding:10px 14px 8px;
-      font-size:0.82rem;font-weight:600;
-      color:var(--text-muted);
-      border-bottom:1px solid var(--border-glass);
-      margin-bottom:6px;
-    `;
-    nameEl.textContent = name.length > 24 ? name.slice(0,24)+'...' : name;
-
-    const signOutBtn = document.createElement('button');
-    signOutBtn.style.cssText = `
-      width:100%;padding:10px 14px;
-      background:none;border:none;
-      border-radius:var(--radius-sm);
-      font-family:var(--font-body);font-size:0.9rem;font-weight:600;
-      color:rgba(255,100,100,0.9);cursor:pointer;
-      text-align:left;display:flex;align-items:center;gap:10px;
-      transition:background 0.2s;
-    `;
-    signOutBtn.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(255,100,100,0.9)">
-        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
-      </svg>
-      Sign Out
-    `;
-    signOutBtn.onmouseover = () => signOutBtn.style.background = 'rgba(255,100,100,0.08)';
-    signOutBtn.onmouseout = () => signOutBtn.style.background = 'none';
-    signOutBtn.onclick = async () => {
-      await _supabase.auth.signOut();
-      window.location.reload();
-    };
-
-    dropdown.appendChild(nameEl);
-    dropdown.appendChild(signOutBtn);
-    avatar.appendChild(dropdown);
-
-    // Toggle dropdown
-    avatar.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = dropdown.style.display === 'block';
-      dropdown.style.display = isOpen ? 'none' : 'block';
-    });
-
-    document.addEventListener('click', () => {
-      dropdown.style.display = 'none';
-    });
-
-    // Insert avatar before the first button in nav-actions
     const themeBtn = navActions.querySelector('.theme-toggle');
-navActions.insertBefore(avatar, themeBtn);
 
-  } else {
-    // Not logged in — show Sign In button if not already there
-    if (!navActions.querySelector('a[href="signin.html"]')) {
+    if (session) {
+      const name = session.user.user_metadata?.full_name
+        || session.user.user_metadata?.name
+        || session.user.email;
+      const letter = name.charAt(0).toUpperCase();
+
+      const avatar = document.createElement('div');
+      avatar.id = 'user-avatar';
+      avatar.style.cssText = `
+        width:38px;height:38px;border-radius:50%;
+        background:var(--grad-accent);
+        display:flex;align-items:center;justify-content:center;
+        font-weight:700;font-size:0.95rem;color:#fff;
+        cursor:pointer;position:relative;
+        box-shadow:0 2px 12px rgba(73,136,196,0.45);
+        flex-shrink:0;user-select:none;
+        border:2px solid rgba(73,136,196,0.4);
+      `;
+      avatar.textContent = letter;
+
+      const dropdown = document.createElement('div');
+      dropdown.id = 'user-dropdown';
+      dropdown.style.cssText = `
+        position:absolute;top:calc(100% + 10px);right:0;
+        min-width:200px;padding:8px;
+        background:var(--bg-glass-strong);
+        backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+        border:1px solid var(--border-glass);
+        border-radius:var(--radius-md);
+        box-shadow:var(--shadow-card);
+        display:none;z-index:9999;
+      `;
+
+      const nameEl = document.createElement('div');
+      nameEl.style.cssText = `
+        padding:10px 14px 8px;
+        font-size:0.82rem;font-weight:600;
+        color:var(--text-muted);
+        border-bottom:1px solid var(--border-glass);
+        margin-bottom:6px;
+      `;
+      nameEl.textContent = name.length > 24 ? name.slice(0, 24) + '...' : name;
+
+      const signOutBtn = document.createElement('button');
+      signOutBtn.style.cssText = `
+        width:100%;padding:10px 14px;
+        background:none;border:none;
+        border-radius:var(--radius-sm);
+        font-family:var(--font-body);font-size:0.9rem;font-weight:600;
+        color:rgba(255,100,100,0.9);cursor:pointer;
+        text-align:left;display:flex;align-items:center;gap:10px;
+        transition:background 0.2s;
+      `;
+      signOutBtn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="rgba(255,100,100,0.9)">
+          <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+        </svg>
+        Sign Out
+      `;
+      signOutBtn.onmouseover = () => signOutBtn.style.background = 'rgba(255,100,100,0.08)';
+      signOutBtn.onmouseout = () => signOutBtn.style.background = 'none';
+      signOutBtn.onclick = async () => {
+        await _supabase.auth.signOut();
+        window.location.reload();
+      };
+
+      dropdown.appendChild(nameEl);
+      dropdown.appendChild(signOutBtn);
+      avatar.appendChild(dropdown);
+
+      avatar.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      });
+
+      document.addEventListener('click', () => {
+        dropdown.style.display = 'none';
+      });
+
+      navActions.insertBefore(avatar, themeBtn);
+
+    } else {
+      // Not logged in
       const signInBtn = document.createElement('a');
       signInBtn.href = 'signin.html';
       signInBtn.className = 'btn btn-secondary';
       signInBtn.style.cssText = 'font-size:0.88rem;padding:9px 18px;';
       signInBtn.textContent = 'Sign In';
-      const themeBtn = navActions.querySelector('.theme-toggle');
-navActions.insertBefore(signInBtn, themeBtn);
+      navActions.insertBefore(signInBtn, themeBtn);
     }
   }
+
+  // Listen for ANY auth change — covers Google OAuth redirect, email login, logout
+  _supabase.auth.onAuthStateChange((event, session) => {
+    renderAvatar(session);
+  });
+
+  // Also run immediately for pages that already have a session
+  const { data: { session } } = await _supabase.auth.getSession();
+  renderAvatar(session);
 },
-    setActiveLink() {
-      const path = window.location.pathname.split('/').pop() || 'index.html';
-      document.querySelectorAll('.nav-links a, .mobile-nav a').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href === path || (path === 'index.html' && href === 'index.html')) {
-          link.classList.add('active');
-        }
-      });
-    }
   };
 
   /* ─── Scroll Animation Observer ─── */
