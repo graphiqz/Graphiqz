@@ -183,7 +183,8 @@ async initUserIcon() {
     });
 
     // Insert avatar before the first button in nav-actions
-    navActions.insertBefore(avatar, navActions.firstChild);
+    const themeBtn = navActions.querySelector('.theme-toggle');
+navActions.insertBefore(avatar, themeBtn);
 
   } else {
     // Not logged in — show Sign In button if not already there
@@ -193,7 +194,8 @@ async initUserIcon() {
       signInBtn.className = 'btn btn-secondary';
       signInBtn.style.cssText = 'font-size:0.88rem;padding:9px 18px;';
       signInBtn.textContent = 'Sign In';
-      navActions.insertBefore(signInBtn, navActions.firstChild);
+      const themeBtn = navActions.querySelector('.theme-toggle');
+navActions.insertBefore(signInBtn, themeBtn);
     }
   }
 },

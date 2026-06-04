@@ -770,7 +770,9 @@ section {
 }
 
 @media (max-width: 768px) {
-  .nav-links, .nav-actions .btn { display: none; }
+  .nav-links { display: none; }
+  .nav-actions .btn:not(.theme-toggle) { display: none; }
+  .nav-actions { gap: 8px; }
   .menu-toggle { display: flex; }
   .grid-2 { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr; }
