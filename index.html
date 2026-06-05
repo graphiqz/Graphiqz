@@ -52,6 +52,21 @@
   <!-- ── Styles ── -->
   <link rel="stylesheet" href="global.css" />
   <link rel="stylesheet" href="home.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+  // Process Google OAuth hash fragment immediately before anything else
+  (function() {
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      const _sb = window.supabase.createClient(
+        'https://kapcgaowheesxevklbfk.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthcGNnYW93aGVlc3hldmtsYmZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzgyOTgsImV4cCI6MjA5NjA1NDI5OH0.BIZfJEzEgAMXiNgyQL1t9WtdC6zVjlSjjWOZUNgdRSs'
+      );
+      _sb.auth.getSession().then(({ data: { session } }) => {
+        if (session) history.replaceState(null, '', window.location.pathname);
+      });
+    }
+  })();
+</script>
 </head>
 <body>
 
