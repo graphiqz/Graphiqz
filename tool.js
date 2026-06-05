@@ -300,10 +300,39 @@ window.addEventListener('unload',()=>cancelAnimationFrame(animId));
     if (!previewerCanvas) return;
 
     const iframe = document.createElement('iframe');
-    iframe.style.cssText = 'width:100%;height:100%;border:none;border-radius:0;display:block;';
-    iframe.setAttribute('sandbox', 'allow-scripts');
-    iframe.srcdoc = htmlCode;
-    previewerCanvas.appendChild(iframe);
+iframe.style.cssText = `
+  width:100%;
+  height:100%;
+  border:none;
+  display:block;
+  position:absolute;
+  inset:0;
+`;
+iframe.setAttribute('sandbox', 'allow-scripts');
+iframe.setAttribute('scrolling', 'no');
+iframe.srcdoc = htmlCode;
+previewerCanvas.appendChild(iframe);
+
+// After iframe loads, force no scroll and fit canvas inside
+iframe.onload = () => {
+  try {
+    const iDoc = iframe.contentDocument || iframe.contentWindow.document;
+    const style = iDoc.createElement('style');
+    style.textContent = `
+      * { margin:0; padding:0; box-sizing:border-box; overflow:hidden; }
+      html, body { width:100%; height:100%; overflow:hidden; }
+      canvas {
+        width:100% !important;
+        height:100% !important;
+        display:block;
+        object-fit:contain;
+      }
+    `;
+    iDoc.head.appendChild(style);
+  } catch(e) {
+    // sandbox may block — scrolling=no handles it
+  }
+};
 
     generatedCode = htmlCode;
 
