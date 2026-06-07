@@ -357,26 +357,48 @@ FINAL REMINDER: Output the HTML file only. No text before it. No text after it. 
   async function callGeminiAPI(prompt, fps, duration, ratio) {
   const FUNCTION_URL = 'https://kapcgaowheesxevklbfk.supabase.co/functions/v1/gemini-proxy';
 
-  const response = await fetch(FUNCTION_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthcGNnYW93aGVlc3hldmtsYmZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzgyOTgsImV4cCI6MjA5NjA1NDI5OH0.BIZfJEzEgAMXiNgyQL1t9WtdC6zVjlSjjWOZUNgdRSs`
-    },
-    body: JSON.stringify({ prompt, fps, duration, ratio })
-  });
-
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.error || `Server error ${response.status}`);
+  let response;
+  try {
+    response = await fetch(FUNCTION_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthcGNnYW93aGVlc3hldmtsYmZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzgyOTgsImV4cCI6MjA5NjA1NDI5OH0.BIZfJEzEgAMXiNgyQL1t9WtdC6zVjlSjjWOZUNgdRSs`
+      },
+      body: JSON.stringify({ prompt, fps, duration, ratio })
+    });
+  } catch (networkErr) {
+    console.error('Network error calling Edge Function:', networkErr);
+    throw new Error('Cannot reach server. Check internet connection.');
   }
 
-  const data = await response.json();
+  // Log raw response for debugging
+  console.log('Edge Function response status:', response.status);
 
-  if (data.error) throw new Error(data.error);
+  let data;
+  try {
+    data = await response.json();
+  } catch (parseErr) {
+    console.error('Failed to parse response:', parseErr);
+    throw new Error('Invalid response from server');
+  }
+
+  console.log('Edge Function response data:', data);
+
+  if (!response.ok) {
+    throw new Error(data?.error || `Server error ${response.status}`);
+  }
+
+  if (data.error) {
+    throw new Error(data.error);
+  }
+
+  if (!data.html) {
+    throw new Error('No animation code returned from server');
+  }
 
   return data.html;
-}
+}fdsgsag
   /* ─── Demo Animation (when no API key) ─── */
   function getDemoAnimation(prompt, fps, duration) {
     const words = prompt.toLowerCase();
