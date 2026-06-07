@@ -558,24 +558,306 @@ iframe.onload = () => {
   }
 
   /* ─── Download as HTML (then convert to video note) ─── */
-  function downloadAnimation() {
-    if (!generatedCode) return;
+  let isRecording = false;
 
-    const fps = getSelectedFPS();
-    const duration = getSelectedDuration();
+function downloadAnimation() {
+  if (!generatedCode) return;
+  if (isRecording) return showToast('Recording already in progress...', 'info');
 
-    // Create download
-    const blob = new Blob([generatedCode], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `graphiqz-animation-${Date.now()}.html`;
-    a.click();
-    URL.revokeObjectURL(url);
+  const fps = getSelectedFPS();
+  const duration = getSelectedDuration();
 
-    // Show info toast
-    showToast(`Animation downloaded! Open in browser to view your ${fps}fps ${duration}s animation.`, 'success');
+  // Ask user which format
+  showDownloadModal(fps, duration);
+}
+
+function showDownloadModal(fps, duration) {
+  // Remove existing modal
+  document.getElementById('download-modal')?.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'download-modal';
+  modal.style.cssText = `
+    position:fixed;inset:0;z-index:99999;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);
+    padding:20px;
+  `;
+
+  modal.innerHTML = `
+    <div style="
+      background:rgba(8,15,30,0.97);
+      border:1px solid rgba(73,136,196,0.3);
+      border-radius:20px;padding:36px;
+      max-width:420px;width:100%;
+      box-shadow:0 20px 60px rgba(0,0,0,0.6);
+      text-align:center;
+    ">
+      <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#9CD5FF,#4988C4);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26" fill="white"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+      </div>
+      <h3 style="font-size:1.3rem;font-weight:700;color:#F7F8F0;margin-bottom:8px;">Export Animation</h3>
+      <p style="font-size:0.88rem;color:rgba(247,248,240,0.5);margin-bottom:28px;">Choose your export format</p>
+
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+
+        <button id="dl-mp4" style="
+          width:100%;padding:16px 20px;border-radius:12px;border:none;
+          background:linear-gradient(135deg,#9CD5FF,#4988C4);
+          color:#fff;font-size:0.95rem;font-weight:700;
+          cursor:pointer;display:flex;align-items:center;gap:14px;
+          box-shadow:0 4px 20px rgba(73,136,196,0.4);
+          transition:transform 0.2s;
+        ">
+          <div style="width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          </div>
+          <div style="text-align:left;">
+            <div>Export as MP4</div>
+            <div style="font-size:0.75rem;font-weight:400;opacity:0.8;">${fps}fps · ${duration}s · 1080p · Recommended</div>
+          </div>
+        </button>
+
+        <button id="dl-html" style="
+          width:100%;padding:16px 20px;border-radius:12px;
+          border:1px solid rgba(73,136,196,0.25);
+          background:rgba(73,136,196,0.08);
+          color:#F7F8F0;font-size:0.95rem;font-weight:600;
+          cursor:pointer;display:flex;align-items:center;gap:14px;
+          transition:transform 0.2s;
+        ">
+          <div style="width:40px;height:40px;border-radius:8px;background:rgba(73,136,196,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="rgba(156,213,255,0.9)"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+          </div>
+          <div style="text-align:left;">
+            <div>Export as HTML</div>
+            <div style="font-size:0.75rem;font-weight:400;opacity:0.6;">Standalone file · plays in any browser</div>
+          </div>
+        </button>
+
+      </div>
+
+      <button id="dl-cancel" style="
+        background:none;border:none;color:rgba(247,248,240,0.4);
+        font-size:0.85rem;cursor:pointer;padding:8px;
+      ">Cancel</button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  document.getElementById('dl-mp4').onclick = () => {
+    modal.remove();
+    recordMP4(fps, duration);
+  };
+
+  document.getElementById('dl-html').onclick = () => {
+    modal.remove();
+    downloadHTML();
+  };
+
+  document.getElementById('dl-cancel').onclick = () => modal.remove();
+
+  // Close on backdrop click
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.remove();
+  });
+}
+
+function downloadHTML() {
+  if (!generatedCode) return;
+  const blob = new Blob([generatedCode], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `graphiqz-${Date.now()}.html`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('HTML downloaded successfully!', 'success');
+}
+
+async function recordMP4(fps, duration) {
+  if (isRecording) return;
+
+  const iframe = document.querySelector('#previewer-canvas iframe');
+  if (!iframe) return showToast('No animation to record. Generate one first.', 'error');
+
+  // Check MediaRecorder support
+  if (!window.MediaRecorder) {
+    showToast('MP4 export not supported in this browser. Try Chrome.', 'error');
+    return;
   }
+
+  isRecording = true;
+
+  // Show recording UI
+  showRecordingOverlay(duration);
+
+  try {
+    // Get canvas from iframe
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    const canvas = iframeDoc.getElementById('anim-canvas');
+
+    if (!canvas) {
+      throw new Error('Canvas not found in animation');
+    }
+
+    // Get canvas stream
+    const stream = canvas.captureStream(fps);
+
+    // Pick best supported format
+    const mimeTypes = [
+      'video/mp4;codecs=h264',
+      'video/mp4',
+      'video/webm;codecs=h264',
+      'video/webm;codecs=vp9',
+      'video/webm;codecs=vp8',
+      'video/webm'
+    ];
+
+    let mimeType = '';
+    for (const type of mimeTypes) {
+      if (MediaRecorder.isTypeSupported(type)) {
+        mimeType = type;
+        break;
+      }
+    }
+
+    if (!mimeType) throw new Error('No supported video format found');
+
+    const chunks = [];
+    const recorder = new MediaRecorder(stream, {
+      mimeType,
+      videoBitsPerSecond: 8000000 // 8 Mbps — high quality
+    });
+
+    recorder.ondataavailable = (e) => {
+      if (e.data && e.data.size > 0) chunks.push(e.data);
+    };
+
+    recorder.onstop = () => {
+      const blob = new Blob(chunks, { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+
+      // Use correct extension
+      const ext = mimeType.includes('mp4') ? 'mp4' : 'webm';
+      a.download = `graphiqz-animation-${Date.now()}.${ext}`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      isRecording = false;
+      removeRecordingOverlay();
+      showToast(`Video exported successfully as .${ext}!`, 'success');
+    };
+
+    recorder.onerror = (e) => {
+      isRecording = false;
+      removeRecordingOverlay();
+      showToast('Recording failed. Please try again.', 'error');
+    };
+
+    // Start recording
+    recorder.start(100); // collect data every 100ms
+
+    // Update progress bar during recording
+    const startTime = Date.now();
+    const totalMs = duration * 1000;
+
+    const progressInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min((elapsed / totalMs) * 100, 100);
+      updateRecordingProgress(progress, elapsed, totalMs);
+    }, 100);
+
+    // Stop after duration
+    setTimeout(() => {
+      clearInterval(progressInterval);
+      recorder.stop();
+      stream.getTracks().forEach(t => t.stop());
+    }, totalMs + 200); // slight buffer
+
+  } catch (err) {
+    isRecording = false;
+    removeRecordingOverlay();
+    showToast(`Export failed: ${err.message}`, 'error');
+  }
+}
+
+function showRecordingOverlay(duration) {
+  document.getElementById('recording-overlay')?.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'recording-overlay';
+  overlay.style.cssText = `
+    position:fixed;inset:0;z-index:99998;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.75);backdrop-filter:blur(12px);
+    padding:20px;
+  `;
+
+  overlay.innerHTML = `
+    <div style="
+      background:rgba(8,15,30,0.97);
+      border:1px solid rgba(73,136,196,0.3);
+      border-radius:20px;padding:40px 36px;
+      max-width:380px;width:100%;text-align:center;
+      box-shadow:0 20px 60px rgba(0,0,0,0.6);
+    ">
+      <div style="position:relative;width:70px;height:70px;margin:0 auto 24px;">
+        <div style="
+          width:70px;height:70px;border-radius:50%;
+          border:3px solid rgba(73,136,196,0.2);
+          border-top-color:#9CD5FF;
+          animation:spin 1s linear infinite;
+          position:absolute;inset:0;
+        "></div>
+        <div style="
+          position:absolute;inset:0;
+          display:flex;align-items:center;justify-content:center;
+        ">
+          <div style="width:16px;height:16px;border-radius:3px;background:#ff6b6b;animation:recPulse 1s ease-in-out infinite;"></div>
+        </div>
+      </div>
+
+      <h3 style="font-size:1.2rem;font-weight:700;color:#F7F8F0;margin-bottom:6px;">Recording Animation</h3>
+      <p style="font-size:0.85rem;color:rgba(247,248,240,0.5);margin-bottom:24px;">Please wait — capturing ${duration}s at full quality</p>
+
+      <div style="background:rgba(73,136,196,0.1);border-radius:99px;height:6px;overflow:hidden;margin-bottom:12px;">
+        <div id="rec-progress-bar" style="
+          height:100%;width:0%;
+          background:linear-gradient(90deg,#4988C4,#9CD5FF);
+          border-radius:99px;
+          transition:width 0.1s linear;
+        "></div>
+      </div>
+
+      <div id="rec-progress-text" style="font-size:0.82rem;color:rgba(247,248,240,0.4);">0%</div>
+
+      <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes recPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+      </style>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+}
+
+function updateRecordingProgress(percent, elapsed, total) {
+  const bar = document.getElementById('rec-progress-bar');
+  const text = document.getElementById('rec-progress-text');
+  if (bar) bar.style.width = percent + '%';
+  if (text) {
+    const remaining = Math.max(0, Math.ceil((total - elapsed) / 1000));
+    text.textContent = `${Math.round(percent)}% · ${remaining}s remaining`;
+  }
+}
+
+function removeRecordingOverlay() {
+  document.getElementById('recording-overlay')?.remove();
+}
 
   /* ─── Toast Notification ─── */
   function showToast(message, type = 'info') {
