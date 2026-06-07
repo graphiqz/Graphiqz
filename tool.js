@@ -398,7 +398,7 @@ FINAL REMINDER: Output the HTML file only. No text before it. No text after it. 
   }
 
   return data.html;
-}fdsgsag
+}
   /* ─── Demo Animation (when no API key) ─── */
   function getDemoAnimation(prompt, fps, duration) {
     const words = prompt.toLowerCase();
