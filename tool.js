@@ -2,10 +2,14 @@
    GRAPHIQZ — Tool Page JavaScript
    Gemini API Integration | Code → Animation → Download
    ========================================================= */
-
+if (window._graphiqzInitialized) return;
+window._graphiqzInitialized = true;
 (function () {
   'use strict';
-
+  if (window._graphiqzInitialized) return;
+  window._graphiqzInitialized = true;
+  
+  /* ─── DOM References ─── */
   /* ─── DOM References ─── */
   const promptArea = document.getElementById('prompt-input');
   const generateBtn = document.getElementById('generate-btn');
