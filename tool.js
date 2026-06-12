@@ -311,7 +311,7 @@ iframe.onload = () => {
     // sandbox may block — scrolling=no handles it
   }
 };
-
+console.log('Generated HTML:', htmlCode);
     generatedCode = htmlCode;
 
     if (downloadBtn) {
