@@ -286,7 +286,7 @@ iframe.style.cssText = `
   position:absolute;
   inset:0;
 `;
-iframe.setAttribute('sandbox', 'allow-scripts');
+iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
 iframe.setAttribute('scrolling', 'no');
 iframe.srcdoc = htmlCode;
 previewerCanvas.appendChild(iframe);
