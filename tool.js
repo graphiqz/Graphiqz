@@ -97,8 +97,16 @@
   }
 
   /* ─── Call Gemini API ─── */
+  let activeController = null;
+
   async function callGeminiAPI(prompt, fps, duration, ratio) {
   const FUNCTION_URL = 'https://kapcgaowheesxevklbfk.supabase.co/functions/v1/gemini-proxy';
+
+  // Cancel any in-flight request
+  if (activeController) {
+    activeController.abort();
+  }
+  activeController = new AbortController();
 
   let response;
   try {
@@ -108,9 +116,13 @@
         'Content-Type': 'application/json',
         'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthcGNnYW93aGVlc3hldmtsYmZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzgyOTgsImV4cCI6MjA5NjA1NDI5OH0.BIZfJEzEgAMXiNgyQL1t9WtdC6zVjlSjjWOZUNgdRSs`
       },
-      body: JSON.stringify({ prompt, fps, duration, ratio })
+      body: JSON.stringify({ prompt, fps, duration, ratio }),
+      signal: activeController.signal
     });
   } catch (networkErr) {
+    if (networkErr.name === 'AbortError') {
+      throw new Error('Request cancelled.');
+    }
     console.error('Network error calling Edge Function:', networkErr);
     throw new Error('Cannot reach server. Check internet connection.');
   }
@@ -729,7 +741,11 @@ function removeRecordingOverlay() {
 
   if (promptArea) {
     promptArea.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') generate();
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        e.stopPropagation();
+        generate();
+      }
     });
   }
 
