@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- ── SEO Meta ── -->
+  <title>Graphiqz — AI-Powered Motion Graphics Generator | Create Stunning Animations</title>
+  <meta name="description" content="Graphiqz transforms your text prompts into stunning motion graphics and animations using AI. Generate professional-quality video animations in seconds — no design skills required." />
+  <meta name="keywords" content="AI motion graphics, animation generator, AI video creation, text to animation, motion graphics tool, AI animation, code-based animation, Graphiqz" />
+  <meta name="author" content="Graphiqz" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://graphiqz.ai/" />
+
+  <!-- ── Open Graph ── -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://graphiqz.ai/" />
+  <meta property="og:title" content="Graphiqz — AI Motion Graphics Generator" />
+  <meta property="og:description" content="Transform text prompts into stunning motion graphics and animations powered by AI. Professional quality in seconds." />
+  <meta property="og:image" content="https://graphiqz.ai/assets/og-image.jpg" />
+  <meta property="og:site_name" content="Graphiqz" />
+
+  <!-- ── Twitter Card ── -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@graphiqzai" />
+  <meta name="twitter:title" content="Graphiqz — AI Motion Graphics Generator" />
+  <meta name="twitter:description" content="Transform text prompts into stunning motion graphics using AI." />
+  <meta name="twitter:image" content="https://graphiqz.ai/assets/og-image.jpg" />
+
+  <!-- ── Schema.org ── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Graphiqz",
+    "description": "AI-powered motion graphics and animation generator",
+    "applicationCategory": "DesignApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "operatingSystem": "Web Browser",
+    "url": "https://graphiqz.ai"
+  }
+  </script>
+
+  <!-- ── Favicon ── -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%239CD5FF'/><stop offset='100%25' stop-color='%234988C4'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23g)'/><text x='16' y='22' text-anchor='middle' font-size='18' fill='white' font-weight='bold'>G</text></svg>" />
+
+  <!-- ── Styles ── -->
+  <link rel="stylesheet" href="global.css" />
+  <link rel="stylesheet" href="home.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+  // Process Google OAuth hash fragment immediately before anything else
+  (function() {
+    if (window.location.hash && window.location.hash.includes('access_token')) {
+      const _sb = window.supabase.createClient(
+        'https://kapcgaowheesxevklbfk.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthcGNnYW93aGVlc3hldmtsYmZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0NzgyOTgsImV4cCI6MjA5NjA1NDI5OH0.BIZfJEzEgAMXiNgyQL1t9WtdC6zVjlSjjWOZUNgdRSs'
+      );
+      _sb.auth.getSession().then(({ data: { session } }) => {
+        if (session) history.replaceState(null, '', window.location.pathname);
+      });
+    }
+  })();
+</script>
+</head>
+<body>
+
+  <!-- Animated Background -->
+  <div class="bg-mesh" aria-hidden="true">
+    <div class="bg-mesh-extra"></div>
+  </div>
+
+  <!-- ════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════ -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="logo" aria-label="Graphiqz Home">Graphiqz</a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+      <li><a href="tool.html">Try Graphiqz</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Toggle dark/light theme">
+        <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-14a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 17a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zM4.22 5.64a1 1 0 0 1 1.42-1.42l.7.71a1 1 0 0 1-1.41 1.41l-.71-.7zM17.66 19.07a1 1 0 1 1 1.41-1.41l.71.7a1 1 0 0 1-1.42 1.42l-.7-.71zM3 12a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1zm17 0a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2h-1a1 1 0 0 1-1-1zM5.64 19.07l-.7.71a1 1 0 0 1-1.42-1.42l.71-.7a1 1 0 0 1 1.41 1.41zM19.07 5.64a1 1 0 1 1 1.41 1.41l-.7.71a1 1 0 0 1-1.42-1.42l.71-.7z"/></svg>
+        <svg class="theme-icon-moon" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="signin.html" class="btn btn-secondary" style="font-size:0.88rem;padding:9px 18px;">Sign In</a>
+      <a href="tool.html" class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Start Creating
+      </a>
+      
+      <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+ <div class="mobile-nav" role="navigation">
+  <a href="index.html">Home</a>
+  <a href="tool.html">Try Graphiqz</a>
+  <a href="pricing.html">Pricing</a>
+  <a href="about.html">About Us</a>
+  <a href="contact.html">Contact Us</a>
+</div>
+
+  <!-- ════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════ -->
+  <section class="hero" aria-label="Hero section">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-grid-lines" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <!-- Left: Copy -->
+      <div class="hero-text">
+        <div class="hero-badge fade-in">
+          <span class="dot">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </span>
+          AI-Powered Motion Graphics
+        </div>
+
+        <h1 class="hero-title fade-up">
+          Describe It.
+          <span class="line-highlight">Watch It Move.</span>
+        </h1>
+
+        <p class="hero-desc fade-up delay-1">
+          Graphiqz transforms your text prompts into stunning, professional-grade motion graphics using AI-generated code — rendered locally and delivered as downloadable animations. No design skills. No waiting.
+        </p>
+
+        <div class="hero-actions fade-up delay-2">
+          <a href="tool.html" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Try Graphiqz Free
+          </a>
+          <a href="pricing.html" class="btn btn-secondary">View Pricing</a>
+        </div>
+
+        <div class="hero-trust fade-up delay-3">
+          <div class="hero-avatars" aria-label="User avatars">
+            <div class="hero-avatar">AK</div>
+            <div class="hero-avatar">MR</div>
+            <div class="hero-avatar">SL</div>
+            <div class="hero-avatar">JP</div>
+          </div>
+          <p class="hero-trust-text">Trusted by <strong>12,000+</strong> creators worldwide</p>
+        </div>
+      </div>
+
+      <!-- Right: Mockup -->
+      <div class="hero-visual fade-right delay-2" aria-hidden="true">
+        <div class="hero-mockup glass">
+          <div class="mockup-header">
+            <div class="mockup-dots">
+              <div class="mockup-dot"></div>
+              <div class="mockup-dot"></div>
+              <div class="mockup-dot"></div>
+            </div>
+            <span class="mockup-title">graphiqz — motion editor</span>
+          </div>
+          <div class="mockup-body">
+            <div class="mockup-code-line">
+              <span class="code-num">1</span>
+              <span class="code-kw">const</span>&nbsp;<span class="code-var">anim</span>&nbsp;=&nbsp;<span class="code-fn">generate</span><span class="code-var">(</span>
+            </div>
+            <div class="mockup-code-line">
+              <span class="code-num">2</span>&nbsp;&nbsp;<span class="code-str">"galaxy nebula with pulse"</span><span class="code-var">,</span>
+            </div>
+            <div class="mockup-code-line">
+              <span class="code-num">3</span>&nbsp;&nbsp;<span class="code-var">{ fps:</span>&nbsp;<span class="code-str">60</span><span class="code-var">, duration:</span>&nbsp;<span class="code-str">15</span>&nbsp;<span class="code-var">}</span>
+            </div>
+            <div class="mockup-code-line">
+              <span class="code-num">4</span>
+              <span class="code-var">);</span>
+            </div>
+            <div class="mockup-preview">
+              <div class="mockup-wave">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating chips -->
+        <div class="hero-float-chips">
+          <div class="float-chip float-chip-1">
+            <span style="background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700;">60fps</span> Pro Render
+          </div>
+          <div class="float-chip float-chip-2">
+            <span style="color:#6bcb77;font-weight:700;">&#10003;</span> Export Ready
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       ANALYTICS / STATS
+  ════════════════════════════════════ -->
+  <section class="analytics-section" aria-label="Platform statistics">
+    <div class="container">
+      <div class="analytics-grid">
+        <div class="stat-card glass fade-up">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          </div>
+          <div class="stat-number" data-count="12000" data-suffix="+" data-duration="2200">0</div>
+          <div class="stat-label">Active Creators</div>
+        </div>
+
+        <div class="stat-card glass fade-up delay-1">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          </div>
+          <div class="stat-number" data-count="840000" data-suffix="+" data-duration="2500">0</div>
+          <div class="stat-label">Animations Generated</div>
+        </div>
+
+        <div class="stat-card glass fade-up delay-2">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg>
+          </div>
+          <div class="stat-number" data-count="4.9" data-suffix="/5" data-decimals="1" data-duration="1800">0</div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+
+        <div class="stat-card glass fade-up delay-3">
+          <div class="stat-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+          </div>
+          <div class="stat-number" data-count="99" data-suffix="%" data-duration="1600">0</div>
+          <div class="stat-label">Uptime Reliability</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       WHAT TO EXPECT
+  ════════════════════════════════════ -->
+  <section class="expect-section" aria-labelledby="expect-heading">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label">How It Works</span>
+        <h2 class="section-title fade-up" id="expect-heading">
+          From <span class="gradient-text">Prompt</span> to Animation<br />in Three Steps
+        </h2>
+        <div class="grad-divider"></div>
+        <p class="section-subtitle fade-up delay-1">No design expertise needed. Just describe what you envision, and Graphiqz handles everything else — code generation, rendering, and export.</p>
+      </div>
+
+      <div class="expect-grid">
+        <div class="glass-card expect-card fade-up delay-1">
+          <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div class="expect-step">01</div>
+          <h3>Describe Your Vision</h3>
+          <p>Type a natural-language prompt describing the motion graphic you want. Be as creative or specific as you like — our AI understands nuance, style, and intent.</p>
+        </div>
+
+        <div class="glass-card expect-card fade-up delay-2">
+          <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <div class="expect-step">02</div>
+          <h3>AI Generates the Code</h3>
+          <p>Our Gemini-powered engine synthesizes professional canvas animation code tailored to your exact prompt — then renders it live in your browser, no uploads required.</p>
+        </div>
+
+        <div class="glass-card expect-card fade-up delay-3">
+          <div class="icon-box">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <div class="expect-step">03</div>
+          <h3>Preview, Refine & Download</h3>
+          <p>Instantly preview your animation in the built-in viewer. Tweak your prompt and regenerate until it's perfect — then download your animation file in seconds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       WHY CHOOSE US
+  ════════════════════════════════════ -->
+  <section class="why-section" aria-labelledby="why-heading">
+    <div class="container">
+      <div class="why-layout">
+        <div>
+          <span class="section-label">Why Graphiqz</span>
+          <h2 class="section-title fade-left" id="why-heading">
+            The Only AI Tool Built<br /><span class="gradient-text">Specifically for Motion</span>
+          </h2>
+          <div class="grad-divider"></div>
+
+          <div class="why-features">
+            <div class="why-feature fade-left delay-1">
+              <div class="icon-box" style="min-width:54px;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              </div>
+              <div class="why-feature-text">
+                <h4>Instant AI Code Synthesis</h4>
+                <p>Graphiqz uses Gemini to generate pixel-perfect canvas animation code — not pre-made templates. Every output is unique to your prompt.</p>
+              </div>
+            </div>
+
+            <div class="why-feature fade-left delay-2">
+              <div class="icon-box" style="min-width:54px;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+              </div>
+              <div class="why-feature-text">
+                <h4>Local Rendering, Zero Lag</h4>
+                <p>All rendering happens in your browser. No cloud queues, no server bottlenecks. Your animation is ready in under 10 seconds.</p>
+              </div>
+            </div>
+
+            <div class="why-feature fade-left delay-3">
+              <div class="icon-box" style="min-width:54px;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              </div>
+              <div class="why-feature-text">
+                <h4>Multiple Aspect Ratios & FPS</h4>
+                <p>Choose from 16:9 cinematic to 9:16 vertical — and 30fps free or 60fps Pro. Every format you need for social, presentation, or broadcast.</p>
+              </div>
+            </div>
+
+            <div class="why-feature fade-left delay-4">
+              <div class="icon-box" style="min-width:54px;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+              </div>
+              <div class="why-feature-text">
+                <h4>Private by Design</h4>
+                <p>Your prompts and animations never leave your device during rendering. We prioritize your intellectual property and creative privacy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-visual fade-right delay-2">
+          <div class="glass-card why-big-card">
+            <div class="why-big-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+            </div>
+            <h3>Production-Grade Output</h3>
+            <p>Every animation Graphiqz generates is smooth, optimized, and ready to present, publish, or embed — no post-processing required.</p>
+            <div style="display:flex;flex-direction:column;gap:12px;text-align:left;">
+              <div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-glass);border-radius:10px;border:1px solid var(--border-glass);">
+                <div style="width:8px;height:8px;border-radius:50%;background:#6bcb77;flex-shrink:0;box-shadow:0 0 8px #6bcb77;"></div>
+                <span style="font-size:0.88rem;color:var(--text-secondary);">Canvas API · WebGL · SVG-ready output</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-glass);border-radius:10px;border:1px solid var(--border-glass);">
+                <div style="width:8px;height:8px;border-radius:50%;background:#6bcb77;flex-shrink:0;box-shadow:0 0 8px #6bcb77;"></div>
+                <span style="font-size:0.88rem;color:var(--text-secondary);">30fps free · 60fps Pro · up to 15s duration</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg-glass);border-radius:10px;border:1px solid var(--border-glass);">
+                <div style="width:8px;height:8px;border-radius:50%;background:#6bcb77;flex-shrink:0;box-shadow:0 0 8px #6bcb77;"></div>
+                <span style="font-size:0.88rem;color:var(--text-secondary);">5 aspect ratios · instant download</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       TESTIMONIALS
+  ════════════════════════════════════ -->
+  <section class="testimonials-section" aria-labelledby="test-heading">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label">Creator Reviews</span>
+        <h2 class="section-title fade-up" id="test-heading">
+          Loved by <span class="gradient-text">Motion Designers</span><br />Around the World
+        </h2>
+        <div class="grad-divider"></div>
+      </div>
+    </div>
+
+    <div class="testimonials-track" role="list">
+      <!-- Card 1 -->
+      <article class="glass-card testimonial-card" role="listitem">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testimonial-text">"Graphiqz completely changed my workflow. What used to take me 2 hours in After Effects now takes under 60 seconds. The output quality is genuinely impressive for AI-generated content."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar"><div class="author-avatar">
+  <img src="https://i.pravatar.cc/150?img=11" alt="Aryan">
+</div></div>
+          <div>
+            <div class="author-name">Aryan Kapoor</div>
+            <div class="author-role">Motion Designer, Mumbai</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="glass-card testimonial-card" role="listitem">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testimonial-text">"I used Graphiqz for a product launch presentation. The AI captured exactly the energy I described — fluid, professional, and on-brand. Our investors were genuinely impressed."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar"><div class="author-avatar">
+  <img src="https://i.pravatar.cc/150?img=15" alt="Aryan">
+</div></div>
+          <div>
+            <div class="author-name">Tomas Chen</div>
+            <div class="author-role">Founder, Paris</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="glass-card testimonial-card" role="listitem">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testimonial-text">"As a content creator, speed is everything. Graphiqz gives me broadcast-quality intros in under a minute. The 60fps Pro renders look absolutely cinematic on my YouTube channel."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar"><div class="author-avatar">
+  <img src="https://i.pravatar.cc/150?img=18" alt="Aryan">
+</div></div>
+          <div>
+            <div class="author-name">Marcus Reid</div>
+            <div class="author-role">YouTuber, 2.3M subscribers</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="glass-card testimonial-card" role="listitem">
+        <div class="testimonial-stars" aria-label="4 out of 5 stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testimonial-text">"I teach digital media and Graphiqz has become essential in my curriculum. Students can explore motion graphics concepts without needing to learn complex software first."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar"><div class="author-avatar">
+  <img src="https://i.pravatar.cc/150?img=30" alt="Aryan">
+</div></div>
+          <div>
+            <div class="author-name">Dr. Jana Petrov</div>
+            <div class="author-role">Digital Media Professor</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 5 -->
+      <article class="glass-card testimonial-card" role="listitem">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="testimonial-text">"The free tier alone is better than most paid tools I've tried. The prompt understanding is exceptional — it gets the difference between 'smooth' and 'energetic' perfectly."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar"><div class="author-avatar">
+  <img src="https://i.pravatar.cc/150?img=26" alt="Aryan">
+</div></div>
+          <div>
+            <div class="author-name">Sofia Laurent</div>
+            <div class="author-role">Freelance Creative Director</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       FAQ
+  ════════════════════════════════════ -->
+  <section class="faq-section" aria-labelledby="faq-heading">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label">Got Questions?</span>
+        <h2 class="section-title fade-up" id="faq-heading">
+          Frequently Asked <span class="gradient-text">Questions</span>
+        </h2>
+        <div class="grad-divider"></div>
+        <p class="section-subtitle fade-up delay-1">Everything you need to know about Graphiqz. Still have a question? <a href="pages/contact.html" style="background:var(--grad-accent);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600;">Contact our team.</a></p>
+      </div>
+
+      <div class="faq-list" itemscope itemtype="https://schema.org/FAQPage">
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-question" itemprop="name" aria-expanded="false">
+            What is Graphiqz and how does it work?
+            <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="faq-answer" itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+            <p itemprop="text">Graphiqz is an AI-powered motion graphics platform. You describe an animation in plain text, our system sends your prompt to Gemini AI, which generates canvas-based animation code. That code renders live in your browser — no cloud processing, no delays. You preview the result and download it instantly.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-question" aria-expanded="false">
+            Is Graphiqz free to use?
+            <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes! Graphiqz has a generous free tier that includes 30fps animations, up to 5 seconds duration, and the 16:9 aspect ratio. For longer animations (up to 15 seconds), 60fps rendering, and all aspect ratios, you'll need a Pro or Studio plan. No credit card required to start.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-question" aria-expanded="false">
+            What format does the animation download in?
+            <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>Animations download as standalone HTML files that play perfectly in any modern browser. You can also screen-record them to convert to MP4, GIF, or WebM. Pro users get access to our planned direct video export feature (currently in beta) which outputs MP4 directly.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-question" aria-expanded="false">
+            Do I need coding or design experience?
+            <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>Absolutely not. Graphiqz is designed for everyone — from professional designers to complete beginners. If you can describe what you want in words, Graphiqz can create it. The AI handles all code generation and rendering automatically.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-question" aria-expanded="false">
+            Can I use the animations commercially?
+            <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. All animations generated on Graphiqz — on any plan including Free — are yours to use commercially. You own the output. Use them in YouTube videos, client presentations, social media, advertisements, or anywhere else without attribution required.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-question" aria-expanded="false">
+            How detailed should my prompt be?
+            <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>More detail generally gives better results. Mention the style (geometric, fluid, particle-based), the mood (energetic, calm, cinematic), colors, and any specific elements you want. For example: "A particle field forming into a glowing ring, pulsing in deep blues and cyan, smooth and cinematic" works much better than just "particles."</p>
+          </div>
+        </div>
+
+        <div class="faq-item" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
+          <button class="faq-question" aria-expanded="false">
+            Is my data and prompt private?
+            <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="faq-answer">
+            <p>Your privacy is a priority. Prompts are sent securely to the Gemini API for generation, but the rendering itself is entirely local in your browser. We do not store your prompts or animations on our servers. Your creative ideas stay with you.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       CTA STRIP
+  ════════════════════════════════════ -->
+  <section class="cta-section" aria-label="Call to action">
+    <div class="container">
+      <div class="glass cta-card fade-up">
+        <span class="section-label">Start Today</span>
+        <h2 class="section-title">Ready to Bring Your<br /><span class="gradient-text">Ideas to Life?</span></h2>
+        <p>Join over 12,000 creators generating stunning motion graphics with Graphiqz. Free forever, no card required.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+          <a href="tool.html" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Start Creating Free
+          </a>
+          <a href="pricing.html" class="btn btn-secondary">View All Plans</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <p>&copy; <span id="copy-year"></span> <span class="grad-copy">Graphiqz</span>. All rights reserved.</p>
+  </footer>
+
+  <!-- ── Scripts ── -->
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="main.js"></script>
+  <script>
+    document.getElementById('copy-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
