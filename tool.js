@@ -311,19 +311,19 @@ iframe.onload = () => {
     const iDoc = iframe.contentDocument || iframe.contentWindow.document;
     const style = iDoc.createElement('style');
     style.textContent = `
-      * { margin:0; padding:0; box-sizing:border-box; overflow:hidden; }
-      html, body { width:100%; height:100%; overflow:hidden; }
-      canvas {
-        width:100% !important;
-        height:100% !important;
-        display:block;
-        object-fit:contain;
+      * { margin:0 !important; padding:0 !important; box-sizing:border-box !important; }
+      html, body { 
+        width:100% !important; height:100% !important; 
+        overflow:hidden !important; background:#080f1e !important;
+      }
+      canvas { 
+        position:fixed !important; top:0 !important; left:0 !important;
+        width:100% !important; height:100% !important; 
+        display:block !important;
       }
     `;
     iDoc.head.appendChild(style);
-  } catch(e) {
-    // sandbox may block — scrolling=no handles it
-  }
+  } catch(e) {}
 };
 console.log('Generated HTML:', htmlCode);
     generatedCode = htmlCode;
