@@ -459,34 +459,36 @@ async function recordMP4(fps, duration) {
   const iframe = document.querySelector('#previewer-canvas iframe');
   if (!iframe) return showToast('No animation to record. Generate one first.', 'error');
 
-  // Check MediaRecorder support
   if (!window.MediaRecorder) {
-    showToast('MP4 export not supported in this browser. Try Chrome.', 'error');
+    showToast('MP4 export not supported. Use Chrome.', 'error');
     return;
   }
 
   isRecording = true;
-
-  // Show recording UI
   showRecordingOverlay(duration);
 
   try {
-    // Get canvas from iframe
-    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-    const canvas = iframeDoc.getElementById('anim-canvas');
+    const iframeWin = iframe.contentWindow;
+    const iframeDoc = iframe.contentDocument || iframeWin.document;
+    const sourceCanvas = iframeDoc.getElementById('anim-canvas');
 
-    if (!canvas) {
-      throw new Error('Canvas not found in animation');
-    }
+    if (!sourceCanvas) throw new Error('Canvas not found');
 
-    // Get canvas stream
-    const stream = canvas.captureStream(fps);
+    const W = sourceCanvas.width;
+    const H = sourceCanvas.height;
 
-    // Pick best supported format
+    // ── Pause the animation inside iframe ──
+    // We will manually drive frames for perfect sync
+    const iframeRAF = iframeWin.requestAnimationFrame;
+
+    // ── Create offscreen canvas at exact source resolution ──
+    const offscreen = document.createElement('canvas');
+    offscreen.width = W;
+    offscreen.height = H;
+    const offCtx = offscreen.getContext('2d', { alpha: false });
+
+    // ── Best supported format ──
     const mimeTypes = [
-      'video/mp4;codecs=h264',
-      'video/mp4',
-      'video/webm;codecs=h264',
       'video/webm;codecs=vp9',
       'video/webm;codecs=vp8',
       'video/webm'
@@ -499,17 +501,19 @@ async function recordMP4(fps, duration) {
         break;
       }
     }
+    if (!mimeType) throw new Error('No supported video format');
 
-    if (!mimeType) throw new Error('No supported video format found');
+    // ── Capture stream at exact FPS ──
+    const stream = offscreen.captureStream(fps);
 
-    const chunks = [];
     const recorder = new MediaRecorder(stream, {
       mimeType,
-      videoBitsPerSecond: 8000000 // 8 Mbps — high quality
+      videoBitsPerSecond: 40000000 // 40 Mbps — maximum quality
     });
 
+    const chunks = [];
     recorder.ondataavailable = (e) => {
-      if (e.data && e.data.size > 0) chunks.push(e.data);
+      if (e.data?.size > 0) chunks.push(e.data);
     };
 
     recorder.onstop = () => {
@@ -517,43 +521,55 @@ async function recordMP4(fps, duration) {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-
-      // Use correct extension
-      const ext = mimeType.includes('mp4') ? 'mp4' : 'webm';
-      a.download = `graphiqz-animation-${Date.now()}.${ext}`;
+      a.download = `graphiqz-${W}x${H}-${Date.now()}.webm`;
       a.click();
       URL.revokeObjectURL(url);
-
       isRecording = false;
       removeRecordingOverlay();
-      showToast(`Video exported successfully as .${ext}!`, 'success');
+      showToast(`Exported ${W}x${H} at ${fps}fps!`, 'success');
     };
 
-    recorder.onerror = (e) => {
+    recorder.onerror = () => {
       isRecording = false;
       removeRecordingOverlay();
-      showToast('Recording failed. Please try again.', 'error');
+      showToast('Recording failed.', 'error');
     };
 
-    // Start recording
-    recorder.start(100); // collect data every 100ms
+    recorder.start();
 
-    // Update progress bar during recording
-    const startTime = Date.now();
     const totalMs = duration * 1000;
+    const frameMs = 1000 / fps; // exact ms per frame
+    const totalFrames = Math.ceil(fps * duration);
+    let frameCount = 0;
 
-    const progressInterval = setInterval(() => {
+    const startTime = Date.now();
+
+    // ── Frame-perfect copy loop ──
+    const captureFrame = () => {
+      if (frameCount >= totalFrames || !isRecording) {
+        recorder.stop();
+        stream.getTracks().forEach(t => t.stop());
+        return;
+      }
+
+      // Copy exact frame from source canvas
+      offCtx.drawImage(sourceCanvas, 0, 0, W, H);
+      frameCount++;
+
+      // Update progress
       const elapsed = Date.now() - startTime;
-      const progress = Math.min((elapsed / totalMs) * 100, 100);
-      updateRecordingProgress(progress, elapsed, totalMs);
-    }, 100);
+      updateRecordingProgress(
+        Math.min((frameCount / totalFrames) * 100, 100),
+        elapsed,
+        totalMs
+      );
 
-    // Stop after duration
-    setTimeout(() => {
-      clearInterval(progressInterval);
-      recorder.stop();
-      stream.getTracks().forEach(t => t.stop());
-    }, totalMs + 200); // slight buffer
+      // Schedule next frame at exact FPS interval
+      setTimeout(captureFrame, frameMs);
+    };
+
+    // Small delay to let recorder initialize
+    setTimeout(captureFrame, 100);
 
   } catch (err) {
     isRecording = false;
