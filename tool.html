@@ -168,200 +168,95 @@
       </div>
 
       <!-- TOOL LAYOUT -->
-      <section class="tool-section" aria-label="Animation generation tool">
-        <div class="tool-layout">
+      <!-- TOOL LAYOUT -->
+<section class="tool-section" aria-label="Animation generation tool">
 
-          <!-- ── LEFT PANEL ── -->
-          <div class="tool-panel" role="region" aria-label="Animation settings">
+  <!-- CENTER EMPTY STATE -->
+  <div class="tool-center-stage" id="tool-center-stage">
+    <div class="center-idle" id="center-idle">
+      <p class="center-tagline">Your turn.</p>
+      <p class="center-sub">Describe any animation and watch it come to life.</p>
+    </div>
 
-            <!-- Prompt -->
-            <div class="panel-block">
-              <div class="panel-label">
-                <span>Describe Your Animation</span>
-                <span class="kbd-hint">Ctrl+Enter</span>
-              </div>
-              <textarea
-                id="prompt-input"
-                class="prompt-area"
-                placeholder="e.g. A galaxy of glowing particles orbiting a bright core, cinematic blue tones, smooth and hypnotic..."
-                maxlength="500"
-                aria-label="Animation prompt"
-              ></textarea>
-              <div class="char-count-wrap">
-                <span><span id="char-count">0</span>/500 characters</span>
-              </div>
-
-              <!-- Sample Prompts -->
-              <div class="panel-label" style="margin-top:14px;">Quick Starters</div>
-              <div class="sample-prompts-row">
-                <button class="sample-prompt" data-prompt="Galaxy nebula with orbiting particles in deep blues and cyan" aria-label="Use galaxy prompt">Galaxy Nebula</button>
-                <button class="sample-prompt" data-prompt="Smooth ocean waves with gradient shimmer, calm and cinematic" aria-label="Use wave prompt">Ocean Waves</button>
-                <button class="sample-prompt" data-prompt="Geometric shapes morphing into each other, electric blue palette" aria-label="Use geometric prompt">Geometric Morph</button>
-                <button class="sample-prompt" data-prompt="Particle field that forms a glowing ring pulse, dark background" aria-label="Use particle prompt">Particle Ring</button>
-                <button class="sample-prompt" data-prompt="Abstract data visualization with flowing lines and grid" aria-label="Use data prompt">Data Flow</button>
-              </div>
-            </div>
-
-            <!-- Frame Rate -->
-            <div class="panel-block">
-              <div class="panel-label">Frame Rate</div>
-              <div class="toggle-group" role="group" aria-label="Select frame rate">
-                <div class="toggle-option">
-                  <input type="radio" name="fps" id="fps-30" value="30" checked />
-                  <label for="fps-30">
-                    <span class="opt-val">30</span>
-                    <span class="opt-tag">FPS · FREE</span>
-                  </label>
-                </div>
-                <div class="toggle-option pro-gate" data-tooltip="Pro feature">
-                  <input type="radio" name="fps" id="fps-60" value="60" disabled />
-                  <label for="fps-60" style="opacity:0.55;cursor:not-allowed;">
-                    <span class="opt-val">60</span>
-                    <span class="opt-tag pro-chip" style="font-size:0.62rem;padding:1px 7px;">PRO</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- Aspect Ratio -->
-            <div class="panel-block">
-              <div class="panel-label">Aspect Ratio</div>
-              <div class="custom-select-wrap">
-                <select id="ratio-select" class="custom-select" aria-label="Select aspect ratio">
-                  <option value="16:9">16:9 — Widescreen (YouTube, Presentations)</option>
-                  <option value="9:16">9:16 — Vertical (Reels, TikTok, Shorts)</option>
-                  <option value="1:1">1:1 — Square (Instagram, Twitter)</option>
-                  <option value="4:3">4:3 — Standard (Slideshows)</option>
-                  <option value="21:9">21:9 — Ultrawide (Cinematic)</option>
-                </select>
-                <span class="select-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
-                </span>
-              </div>
-            </div>
-
-            <!-- Duration -->
-            <div class="panel-block">
-              <div class="panel-label">Duration</div>
-              <div class="toggle-group" role="group" aria-label="Select duration">
-                <div class="toggle-option">
-                  <input type="radio" name="duration" id="dur-5" value="5" checked />
-                  <label for="dur-5">
-                    <span class="opt-val">5s</span>
-                    <span class="opt-tag">FREE</span>
-                  </label>
-                </div>
-                <div class="toggle-option pro-gate" data-tooltip="Pro feature">
-                  <input type="radio" name="duration" id="dur-10" value="10" disabled />
-                  <label for="dur-10" style="opacity:0.55;cursor:not-allowed;">
-                    <span class="opt-val">10s</span>
-                    <span class="opt-tag pro-chip" style="font-size:0.62rem;padding:1px 7px;">PRO</span>
-                  </label>
-                </div>
-                <div class="toggle-option pro-gate" data-tooltip="Pro feature">
-                  <input type="radio" name="duration" id="dur-15" value="15" disabled />
-                  <label for="dur-15" style="opacity:0.55;cursor:not-allowed;">
-                    <span class="opt-val">15s</span>
-                    <span class="opt-tag pro-chip" style="font-size:0.62rem;padding:1px 7px;">PRO</span>
-                  </label>
-                </div>
-              </div>
-              <p class="pro-notice">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                <a href="pricing.html">Upgrade to Pro</a> for 60fps and up to 15s animations
-              </p>
-            </div>
-
-            <!-- Generate -->
-            <button id="generate-btn" class="btn btn-primary generate-btn" aria-label="Generate animation">
-              <div class="btn-shimmer"></div>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path fill="white" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              <span class="btn-text">Generate Animation</span>
-            </button>
-
+    <!-- Generation card (hidden initially) -->
+    <div class="gen-card" id="gen-card" style="display:none;">
+      <div class="gen-card-inner">
+        <div class="gen-card-loading" id="gen-card-loading">
+          <div class="gen-spinner"></div>
+          <p class="gen-status-text" id="gen-status-text">Generating animation...</p>
+          <div class="gen-progress-wrap">
+            <div class="gen-progress-bar" id="progress-bar"></div>
           </div>
-
-          <!-- ── RIGHT: PREVIEWER ── -->
-          <div class="tool-previewer" role="region" aria-label="Animation preview">
-
-            <!-- Header bar -->
-            <div class="previewer-header">
-              <div style="display:flex;align-items:center;gap:12px;">
-                <div class="previewer-dots">
-                  <div class="previewer-dot"></div>
-                  <div class="previewer-dot"></div>
-                  <div class="previewer-dot"></div>
-                </div>
-                <span class="previewer-title" id="previewer-title">Preview — waiting for prompt</span>
-              </div>
-              <div class="previewer-actions">
-                <button id="download-btn" class="btn btn-secondary" aria-label="Download animation" disabled>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                  Download
-                </button>
-              </div>
-            </div>
-
-            <!-- Progress bar -->
-            <div class="previewer-progress">
-              <div class="previewer-progress-bar" id="progress-bar"></div>
-            </div>
-
-            <!-- Body -->
-            <div class="previewer-body" id="previewer-body">
-
-              <!-- Empty state -->
-              <div class="previewer-empty" id="empty-state">
-                <div class="previewer-empty-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
-                </div>
-                <h3>Your Animation Appears Here</h3>
-                <p>Write a prompt on the left and click <strong>Generate Animation</strong> to create your first motion graphic.</p>
-              </div>
-
-              <!-- Loading state -->
-              <div class="loading-state" id="loading-state">
-                <div class="loading-spinner" aria-hidden="true"></div>
-                <p class="loading-text">Creating your animation...</p>
-                <div class="loading-steps" role="status" aria-live="polite">
-                  <div class="loading-step" id="step-analyze">
-                    <div class="step-dot"></div>
-                    Analyzing your prompt
-                  </div>
-                  <div class="loading-step" id="step-generate">
-                    <div class="step-dot"></div>
-                    Generating animation code
-                  </div>
-                  <div class="loading-step" id="step-render">
-                    <div class="step-dot"></div>
-                    Rendering preview
-                  </div>
-                  <div class="loading-step" id="step-ready">
-                    <div class="step-dot"></div>
-                    Finalizing output
-                  </div>
-                </div>
-              </div>
-
-              <!-- Canvas (iframe injection target) -->
-              <div id="previewer-canvas" style="display:none;width:100%;height:100%;"></div>
-
-            </div>
+          <div class="loading-steps" id="loading-state">
+            <div class="loading-step" id="step-analyze"><div class="step-dot"></div>Analyzing prompt</div>
+            <div class="loading-step" id="step-generate"><div class="step-dot"></div>Generating code</div>
+            <div class="loading-step" id="step-render"><div class="step-dot"></div>Rendering preview</div>
+            <div class="loading-step" id="step-ready"><div class="step-dot"></div>Ready</div>
           </div>
-
         </div>
-
-        <!-- Bottom info bar -->
-        <div class="tool-bottom">
-          <div class="tool-bottom-info">
-            <strong>Free Plan:</strong> 30fps · 5s duration · 16:9 ratio · HTML export
-          </div>
-          <a href="pricing.html" class="btn btn-secondary" style="font-size:0.82rem;padding:9px 18px;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            Unlock Pro Features
-          </a>
+        <div class="gen-card-result" id="gen-card-result" style="display:none;">
+          <div id="previewer-canvas" style="width:100%;height:100%;position:relative;"></div>
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM PROMPT BAR -->
+  <div class="prompt-bar-wrap">
+
+    <!-- Options row -->
+    <div class="prompt-options-row">
+      <!-- FPS -->
+      <div class="opt-group" role="group" aria-label="FPS">
+        <button class="opt-btn active" data-fps="30">30 FPS</button>
+        <button class="opt-btn pro-gate" data-fps="60">60 FPS <span class="pro-pill">PRO</span></button>
+      </div>
+
+      <!-- Ratio -->
+      <div class="opt-group">
+        <select id="ratio-select" class="opt-select" aria-label="Aspect ratio">
+          <option value="16:9">16:9</option>
+          <option value="9:16">9:16</option>
+          <option value="1:1">1:1</option>
+          <option value="4:3">4:3</option>
+          <option value="21:9">21:9</option>
+        </select>
+      </div>
+
+      <!-- Duration -->
+      <div class="opt-group" role="group" aria-label="Duration">
+        <button class="opt-btn active" data-dur="5">5s</button>
+        <button class="opt-btn pro-gate" data-dur="10">10s <span class="pro-pill">PRO</span></button>
+        <button class="opt-btn pro-gate" data-dur="15">15s <span class="pro-pill">PRO</span></button>
+      </div>
+
+      <!-- Download (shown after generation) -->
+      <div class="opt-group" id="download-group" style="margin-left:auto;display:none;">
+        <button id="download-btn" class="opt-btn download-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Export
+        </button>
+      </div>
+    </div>
+
+    <!-- Prompt input row -->
+    <div class="prompt-input-row">
+      <textarea
+        id="prompt-input"
+        class="prompt-bar-input"
+        placeholder="Describe your animation... e.g. Galaxy particles orbiting a glowing core"
+        maxlength="500"
+        rows="1"
+        aria-label="Animation prompt"
+      ></textarea>
+      <button id="generate-btn" class="prompt-send-btn" aria-label="Generate">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </button>
+    </div>
+
+  </div>
+
+</section>
 
     </main>
 
