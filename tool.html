@@ -22,12 +22,14 @@
   })();
   </script>
   <style>
-    /* ── TOOL PAGE — FULL SCREEN NO SCROLL ── */
+    /* ── LOCK PAGE — NO SCROLL ── */
     html, body {
       height: 100%;
       overflow: hidden;
+      background: var(--bg-primary);
     }
 
+    /* ── TOOL ROOT ── */
     .tool-root {
       display: flex;
       flex-direction: column;
@@ -40,99 +42,119 @@
     .tool-stage {
       flex: 1;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: hidden;
       min-height: 0;
+      padding: 20px;
     }
 
-    /* Idle state */
+    /* ── IDLE TEXT ── */
     .stage-idle {
       text-align: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.4s ease, transform 0.4s ease;
       pointer-events: none;
-      animation: fadeUp 0.6s ease both;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .stage-idle.hidden {
+      opacity: 0;
+      transform: translate(-50%, -60%);
     }
 
     .stage-idle-title {
-      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-size: clamp(3rem, 7vw, 6rem);
       font-family: var(--font-heading);
       font-weight: 700;
-      background: linear-gradient(135deg, #9CD5FF, #4988C4, #7AAACE);
+      background: var(--grad-accent);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 12px;
-      line-height: 1.1;
+      margin-bottom: 14px;
+      line-height: 1.05;
     }
 
     .stage-idle-sub {
-      font-size: 1rem;
-      color: rgba(247,248,240,0.4);
+      font-size: 1.05rem;
+      color: var(--text-muted);
       font-family: var(--font-body);
     }
 
-    /* Generation card */
+    /* ── GENERATION CARD ── */
     .gen-card {
-      width: min(860px, 88vw);
-      height: min(500px, 58vh);
+      width: min(820px, 90vw);
+      height: min(480px, 56vh);
       border-radius: 20px;
-      border: 1px solid rgba(73,136,196,0.25);
-      background: rgba(8,15,30,0.8);
+      border: 1px solid var(--border-glass);
+      background: var(--bg-card);
       backdrop-filter: blur(24px);
+      box-shadow: var(--shadow-card);
       overflow: hidden;
-      position: relative;
-      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateY(40px) scale(0.96);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s cubic-bezier(0.34,1.56,0.64,1),
+                  transform 0.45s cubic-bezier(0.34,1.56,0.64,1);
     }
 
     .gen-card.show {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: cardUp 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+      opacity: 1;
+      transform: translate(-50%, -50%) translateY(0) scale(1);
+      pointer-events: all;
     }
 
-    .gen-card.hide {
-      animation: cardDown 0.35s ease both;
+    .gen-card.hide-up {
+      opacity: 0;
+      transform: translate(-50%, -50%) translateY(-36px) scale(0.97);
     }
 
     /* Loading inside card */
     .gen-loading {
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 14px;
+      gap: 16px;
       padding: 40px;
-      width: 100%;
-      height: 100%;
     }
 
     .gen-spinner {
-      width: 52px;
-      height: 52px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
-      border: 3px solid rgba(73,136,196,0.15);
+      border: 3px solid var(--border-glass);
       border-top-color: #9CD5FF;
-      animation: spin 1s linear infinite;
+      animation: toolSpin 1s linear infinite;
     }
 
-    .gen-loading-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text-primary, #F7F8F0);
+    .gen-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
       font-family: var(--font-heading);
     }
 
-    .gen-loading-sub {
-      font-size: 0.82rem;
-      color: rgba(247,248,240,0.45);
+    .gen-sub {
+      font-size: 0.83rem;
+      color: var(--text-muted);
     }
 
     .gen-progress-track {
-      width: 220px;
+      width: 240px;
       height: 3px;
-      background: rgba(73,136,196,0.15);
+      background: var(--bg-glass);
       border-radius: 99px;
       overflow: hidden;
     }
@@ -148,21 +170,22 @@
     .gen-steps {
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      margin-top: 8px;
+      gap: 7px;
+      margin-top: 4px;
     }
 
     .gen-step {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      color: rgba(247,248,240,0.3);
+      gap: 9px;
+      font-size: 0.81rem;
+      color: var(--text-muted);
       transition: color 0.3s;
+      font-family: var(--font-body);
     }
 
     .gen-step.active { color: #9CD5FF; }
-    .gen-step.done   { color: rgba(107,203,119,0.8); }
+    .gen-step.done   { color: #6bcb77; }
 
     .gen-step-dot {
       width: 6px; height: 6px;
@@ -171,7 +194,7 @@
       flex-shrink: 0;
     }
 
-    /* Result iframe */
+    /* Result inside card */
     .gen-result {
       width: 100%;
       height: 100%;
@@ -188,40 +211,51 @@
       display: block;
     }
 
-    /* Export button overlay on card */
+    /* Export button on card */
     .gen-export-btn {
       position: absolute;
-      top: 14px;
-      right: 14px;
-      padding: 8px 16px;
+      top: 12px;
+      right: 12px;
+      padding: 8px 18px;
       border-radius: 10px;
-      border: none;
-      background: rgba(8,15,30,0.85);
-      border: 1px solid rgba(73,136,196,0.3);
+      border: 1px solid var(--border-glass-hover);
+      background: rgba(8,15,30,0.82);
       color: #9CD5FF;
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       font-family: var(--font-body);
       cursor: pointer;
       display: none;
       align-items: center;
-      gap: 6px;
-      backdrop-filter: blur(10px);
+      gap: 7px;
+      backdrop-filter: blur(12px);
       transition: background 0.2s;
-      z-index: 10;
+      z-index: 20;
     }
 
-    .gen-export-btn:hover { background: rgba(73,136,196,0.2); }
+    .gen-export-btn:hover { background: rgba(73,136,196,0.22); }
     .gen-export-btn.show  { display: flex; }
 
     /* ── BOTTOM PROMPT BAR ── */
     .prompt-bar {
       flex-shrink: 0;
-      padding: 14px 24px 20px;
+      padding: 14px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* floating card wrapping options + input */
+    .prompt-card {
+      width: min(760px, 92vw);
+      background: var(--bg-glass-strong);
+      border: 1px solid var(--border-glass);
+      border-radius: 20px;
+      padding: 14px 16px;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      border-top: 1px solid rgba(73,136,196,0.1);
-      background: rgba(8,15,30,0.6);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
       backdrop-filter: blur(20px);
     }
 
@@ -230,13 +264,14 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .opt-pill-group {
       display: flex;
       align-items: center;
-      background: rgba(73,136,196,0.07);
-      border: 1px solid rgba(73,136,196,0.15);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
       border-radius: 99px;
       padding: 3px;
       gap: 2px;
@@ -247,7 +282,7 @@
       border-radius: 99px;
       border: none;
       background: transparent;
-      color: rgba(247,248,240,0.45);
+      color: var(--text-muted);
       font-size: 0.76rem;
       font-family: var(--font-body);
       cursor: pointer;
@@ -259,18 +294,18 @@
     }
 
     .opt-pill.active {
-      background: linear-gradient(135deg, #1C4D8D, #4988C4);
+      background: var(--grad-accent);
       color: white;
-      box-shadow: 0 2px 10px rgba(73,136,196,0.35);
+      box-shadow: 0 2px 10px rgba(73,136,196,0.4);
     }
 
-    .opt-pill:hover:not(.active):not([disabled]) {
-      color: rgba(247,248,240,0.8);
-      background: rgba(73,136,196,0.12);
+    .opt-pill:hover:not(.active):not(.pro-locked) {
+      color: var(--text-secondary);
+      background: var(--bg-glass-strong);
     }
 
-    .opt-pill[disabled], .opt-pill.pro-locked {
-      opacity: 0.4;
+    .opt-pill.pro-locked {
+      opacity: 0.45;
       cursor: not-allowed;
     }
 
@@ -281,27 +316,39 @@
       color: white;
       padding: 1px 5px;
       border-radius: 99px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
     }
 
+    /* Ratio select */
     .opt-select-wrap {
-      display: flex;
-      align-items: center;
-      background: rgba(73,136,196,0.07);
-      border: 1px solid rgba(73,136,196,0.15);
+      background: var(--bg-glass);
+      border: 1px solid var(--border-glass);
       border-radius: 99px;
       padding: 5px 14px;
+      display: flex;
+      align-items: center;
     }
 
-    .opt-select {
+    #ratio-select {
       background: transparent;
       border: none;
-      color: rgba(247,248,240,0.7);
+      color: var(--text-secondary);
       font-size: 0.76rem;
       font-family: var(--font-body);
       cursor: pointer;
       outline: none;
+      appearance: none;
+      padding-right: 8px;
+    }
+
+    /* Dropdown options theming */
+    #ratio-select option {
+      background: var(--bg-secondary, #0a1628);
+      color: var(--text-primary, #F7F8F0);
+    }
+
+    [data-theme="light"] #ratio-select option {
+      background: #eef2f8;
+      color: #1a2d3e;
     }
 
     /* Prompt input row */
@@ -309,16 +356,6 @@
       display: flex;
       align-items: flex-end;
       gap: 10px;
-      background: rgba(73,136,196,0.06);
-      border: 1.5px solid rgba(73,136,196,0.2);
-      border-radius: 16px;
-      padding: 12px 12px 12px 18px;
-      transition: border-color 0.2s;
-    }
-
-    .prompt-input-row:focus-within {
-      border-color: rgba(73,136,196,0.5);
-      background: rgba(73,136,196,0.09);
     }
 
     #prompt-input {
@@ -326,58 +363,56 @@
       background: transparent;
       border: none;
       outline: none;
-      color: rgba(247,248,240,0.9);
-      font-size: 0.95rem;
+      color: var(--text-primary);
+      font-size: 0.96rem;
       font-family: var(--font-body);
       resize: none;
-      max-height: 100px;
+      max-height: 96px;
       overflow-y: auto;
       line-height: 1.5;
-      min-height: 24px;
+      min-height: 26px;
     }
 
-    #prompt-input::placeholder { color: rgba(247,248,240,0.3); }
+    #prompt-input::placeholder { color: var(--text-muted); }
 
     #generate-btn {
       width: 44px;
       height: 44px;
       border-radius: 12px;
       border: none;
-      background: linear-gradient(135deg, #4988C4, #9CD5FF);
+      background: var(--grad-accent);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-      box-shadow: 0 4px 14px rgba(73,136,196,0.45);
+      box-shadow: var(--shadow-btn);
     }
 
-    #generate-btn:hover  { transform: scale(1.07); box-shadow: 0 6px 18px rgba(73,136,196,0.55); }
-    #generate-btn:active { transform: scale(0.97); }
-    #generate-btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+    #generate-btn:hover  { transform: scale(1.08); }
+    #generate-btn:active { transform: scale(0.96); }
+    #generate-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
     /* Animations */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes cardUp {
-      from { opacity: 0; transform: translateY(32px) scale(0.96); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-    @keyframes cardDown {
-      from { opacity: 1; transform: translateY(0) scale(1); }
-      to   { opacity: 0; transform: translateY(-28px) scale(0.97); }
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes toolSpin { to { transform: rotate(360deg); } }
 
-    /* Mobile */
-    @media (max-width: 768px) {
-      .gen-card { width: 94vw; height: 48vh; }
-      .prompt-bar { padding: 10px 14px 16px; }
-      .prompt-opts { flex-wrap: wrap; gap: 6px; }
-      .stage-idle-title { font-size: 2.2rem; }
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .gen-card {
+        width: 95vw;
+        height: 44vh;
+        border-radius: 16px;
+      }
+      .prompt-card {
+        width: 96vw;
+        padding: 12px 14px;
+        border-radius: 16px;
+      }
+      .stage-idle-title { font-size: 2.6rem; }
+      .stage-idle-sub   { font-size: 0.9rem; }
+      .opt-pill { padding: 4px 10px; font-size: 0.72rem; }
+      #prompt-input { font-size: 0.9rem; }
     }
   </style>
 </head>
@@ -402,9 +437,7 @@
         <svg class="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0-14a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V4a1 1 0 0 1 1-1zm0 17a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zM4.22 5.64a1 1 0 0 1 1.42-1.42l.7.71a1 1 0 0 1-1.41 1.41l-.71-.7zM17.66 19.07a1 1 0 1 1 1.41-1.41l.71.7a1 1 0 0 1-1.42 1.42l-.7-.71zM3 12a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2H4a1 1 0 0 1-1-1zm17 0a1 1 0 0 1 1-1h1a1 1 0 0 1 0 2h-1a1 1 0 0 1-1-1zM5.64 19.07l-.7.71a1 1 0 0 1-1.42-1.42l.71-.7a1 1 0 0 1 1.41 1.41zM19.07 5.64a1 1 0 1 1 1.41 1.41l-.7.71a1 1 0 0 1-1.42-1.42l.71-.7z"/></svg>
         <svg class="theme-icon-moon" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <a href="pricing.html" class="btn btn-secondary" style="font-size:0.85rem;padding:9px 18px;">
-        ★ Upgrade to Pro
-      </a>
+      <a href="pricing.html" class="btn btn-secondary" style="font-size:0.85rem;padding:9px 18px;">★ Upgrade to Pro</a>
     </div>
     <button class="menu-toggle" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -425,20 +458,20 @@
     <!-- CENTER STAGE -->
     <div class="tool-stage" id="tool-stage">
 
-      <!-- Idle text -->
+      <!-- Idle text — centered absolutely -->
       <div class="stage-idle" id="stage-idle">
         <div class="stage-idle-title">Your turn.</div>
         <div class="stage-idle-sub">Describe any animation and watch it come to life.</div>
       </div>
 
-      <!-- Generation card -->
+      <!-- Generation card — centered absolutely -->
       <div class="gen-card" id="gen-card">
 
-        <!-- Loading state -->
+        <!-- Loading -->
         <div class="gen-loading" id="gen-loading">
           <div class="gen-spinner"></div>
-          <div class="gen-loading-title" id="gen-loading-title">Generating animation...</div>
-          <div class="gen-loading-sub" id="gen-loading-sub">This takes a few seconds</div>
+          <div class="gen-title" id="gen-title">Generating animation...</div>
+          <div class="gen-sub"   id="gen-sub">This takes a few seconds</div>
           <div class="gen-progress-track">
             <div id="progress-bar"></div>
           </div>
@@ -450,70 +483,68 @@
           </div>
         </div>
 
-        <!-- Result state -->
+        <!-- Result -->
         <div class="gen-result" id="gen-result">
           <div id="previewer-canvas" style="width:100%;height:100%;"></div>
         </div>
 
-        <!-- Export button overlay -->
-        <button class="gen-export-btn" id="download-btn" aria-label="Export animation">
+        <!-- Export overlay button -->
+        <button class="gen-export-btn" id="download-btn">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
           Export
         </button>
 
       </div>
-
     </div>
 
     <!-- BOTTOM PROMPT BAR -->
     <div class="prompt-bar">
+      <div class="prompt-card">
 
-      <!-- Options -->
-      <div class="prompt-opts">
+        <!-- Options -->
+        <div class="prompt-opts">
 
-        <!-- FPS -->
-        <div class="opt-pill-group">
-          <button class="opt-pill active" data-fps="30">30 FPS</button>
-          <button class="opt-pill pro-locked" data-fps="60">60 FPS <span class="pro-badge">PRO</span></button>
+          <div class="opt-pill-group">
+            <button class="opt-pill active" data-fps="30">30 FPS</button>
+            <button class="opt-pill pro-locked" data-fps="60">60 FPS <span class="pro-badge">PRO</span></button>
+          </div>
+
+          <div class="opt-select-wrap">
+            <select id="ratio-select">
+              <option value="16:9">16:9 Widescreen</option>
+              <option value="9:16">9:16 Vertical</option>
+              <option value="1:1">1:1 Square</option>
+              <option value="4:3">4:3 Standard</option>
+              <option value="21:9">21:9 Ultrawide</option>
+            </select>
+          </div>
+
+          <div class="opt-pill-group">
+            <button class="opt-pill active" data-dur="5">5s</button>
+            <button class="opt-pill pro-locked" data-dur="10">10s <span class="pro-badge">PRO</span></button>
+            <button class="opt-pill pro-locked" data-dur="15">15s <span class="pro-badge">PRO</span></button>
+          </div>
+
         </div>
 
-        <!-- Ratio -->
-        <div class="opt-select-wrap">
-          <select id="ratio-select" class="opt-select" aria-label="Aspect ratio">
-            <option value="16:9">16:9</option>
-            <option value="9:16">9:16</option>
-            <option value="1:1">1:1</option>
-            <option value="4:3">4:3</option>
-            <option value="21:9">21:9</option>
-          </select>
-        </div>
-
-        <!-- Duration -->
-        <div class="opt-pill-group">
-          <button class="opt-pill active" data-dur="5">5s</button>
-          <button class="opt-pill pro-locked" data-dur="10">10s <span class="pro-badge">PRO</span></button>
-          <button class="opt-pill pro-locked" data-dur="15">15s <span class="pro-badge">PRO</span></button>
+        <!-- Prompt input -->
+        <div class="prompt-input-row">
+          <textarea
+            id="prompt-input"
+            placeholder="Describe your animation... e.g. A galaxy of glowing particles orbiting a bright core"
+            maxlength="500"
+            rows="1"
+            aria-label="Animation prompt"
+          ></textarea>
+          <button id="generate-btn" aria-label="Generate animation">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </button>
         </div>
 
       </div>
-
-      <!-- Prompt input -->
-      <div class="prompt-input-row">
-        <textarea
-          id="prompt-input"
-          placeholder="Describe your animation... e.g. Galaxy particles orbiting a glowing core"
-          maxlength="500"
-          rows="1"
-          aria-label="Animation prompt"
-        ></textarea>
-        <button id="generate-btn" aria-label="Generate animation">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        </button>
-      </div>
-
     </div>
 
-  </div><!-- end .tool-root -->
+  </div>
 
   <script src="main.js"></script>
   <script src="tool.js"></script>
