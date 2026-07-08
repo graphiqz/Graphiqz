@@ -529,7 +529,15 @@
 .pricing-section {
   padding: 60px 5% 100px;
 }
+.pricing-table {
+  margin: 0 32px;
+  border-radius: 16px;
+  overflow: hidden;
+}
 
+.money-back-card {
+  margin-top: 24px;
+}
 .pricing-toggle-wrap {
   display: flex;
   align-items: center;
@@ -1768,4 +1776,26 @@
   .prompt-options-row {
     gap: 6px;
   }
+}
+/* ── Contact form fix ── */
+.form-group {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-bottom: 20px !important;
+}
+
+.form-group label {
+  display: block !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: var(--text-secondary) !important;
+  margin-bottom: 0 !important;
+  line-height: 1.4 !important;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  margin-top: 0 !important;
 }
