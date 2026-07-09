@@ -163,11 +163,11 @@
 
     .stage-idle.out {
       opacity: 0;
-      transform: translate(-50%, -62%);
+  transform: translate(-50%, -62%);
     }
 
-    .stage-idle-title {
-      font-size: clamp(2.8rem, 8vw, 5.5rem);
+   .stage-idle-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
       font-family: var(--font-heading);
       font-weight: 700;
       background: var(--grad-accent);
@@ -462,7 +462,27 @@
       max-height: 88px;
       overflow-y: auto;
     }
+.stage-idle-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #FF9A3C;
+  margin-bottom: 10px;
+  opacity: 0.85;
+}
 
+.stage-idle-title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  background: linear-gradient(135deg, #FFD93D, #FF9A3C, #FF6B35);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
     #prompt-input::placeholder { color: var(--text-muted); }
 
     #generate-btn {
@@ -520,7 +540,7 @@
   <header class="tool-topbar">
     <div class="tool-topbar-left">
       <a href="index.html" class="tool-brand">Graphiqz</a>
-      <span class="tool-brand-label">Studio</span>
+      <span class="tool-brand-label" style="font-size:0.82rem;padding:3px 12px;letter-spacing:0.08em;color:var(--text-secondary);border-color:rgba(255,160,60,0.3);">Studio</span>
     </div>
     <div class="tool-topbar-right">
       <div class="plan-badge">
@@ -545,8 +565,9 @@
 
       <!-- Idle -->
       <div class="stage-idle" id="stage-idle">
-        <div class="stage-idle-title">Your turn.</div>
-        <div class="stage-idle-sub">Describe any animation and watch it come to life.</div>
+        <div class="stage-idle-eyebrow">✦ AI Motion Graphics</div>
+<div class="stage-idle-title">Your turn.</div>
+<div class="stage-idle-sub">Describe any animation and watch it come to life.</div>
       </div>
 
       <!-- Card -->

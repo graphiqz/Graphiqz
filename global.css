@@ -135,7 +135,7 @@ h1, h2, h3, h4, h5 {
 }
 
 .gradient-text {
-  background: var(--grad-accent);
+ background: linear-gradient(135deg, #FFD93D, #FF9A3C, #FF6B35);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -334,7 +334,7 @@ h1, h2, h3, h4, h5 {
   font-size: 1.7rem;
   font-weight: 700;
   text-decoration: none;
-  background: linear-gradient(90deg, #9CD5FF, #4988C4, #7AAACE, #9CD5FF);
+  background: linear-gradient(90deg, #FFD93D, #FF9A3C, #FF6B35, #FFD93D);
   background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -350,6 +350,23 @@ h1, h2, h3, h4, h5 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: logoGrad 4s linear infinite;
+}
+/* Terminal cursor after logo */
+.logo::after {
+  content: '_';
+  display: inline-block;
+  margin-left: 2px;
+  background: linear-gradient(90deg, #FFD93D, #FF6B35);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: blink 1.1s step-end infinite;
+  font-weight: 400;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }
 
 @keyframes logoGrad {
@@ -534,6 +551,10 @@ section {
 }
 
 .section-title {
+  background: linear-gradient(135deg, #FFD93D 0%, #FF9A3C 50%, #FF6B35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-family: var(--font-heading);
   font-size: clamp(2rem, 4vw, 3.2rem);
   font-weight: 700;
